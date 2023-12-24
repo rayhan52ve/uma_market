@@ -1,0 +1,21 @@
+APP_NAME=ServiceTop
+APP_ENV=local
+APP_KEY=base64:8grBO6XdwiP9ES00tK+AcAuLOtR+pT6qjgo6WQEU8Y4=
+APP_DEBUG=true
+APP_URL=http://localhost
+APP_VERSION=
+LOG_CHANNEL=stack
+LOG_LEVEL=debug
+APP_TIMEZONE = 'Asia/Dhaka'
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=umamarket
+DB_USERNAME=root
+DB_PASSWORD=
+
+url = 'https://bulksms.gloriousit.com/api/smsapi'
+sms_balance_url= 'https://bulksms.gloriousit.com/api/getBalanceApi'
+api_key = 'AVMMKHYMOT6FZEoYUpIt'
+senderid = '8809617611058'
