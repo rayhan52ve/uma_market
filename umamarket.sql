@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 26, 2023 at 06:33 AM
+-- Generation Time: Sep 27, 2024 at 12:02 PM
 -- Server version: 8.0.30
--- PHP Version: 8.1.10
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,13 +29,13 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admins` (
   `id` bigint UNSIGNED NOT NULL,
-  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `username` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `wallet` decimal(28,8) NOT NULL,
-  `verification_code` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `verification_code` varchar(6) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `role` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -46,9 +46,8 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `username`, `email`, `password`, `image`, `wallet`, `verification_code`, `remember_token`, `role`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin@gmail.com', '$2y$10$2/ZtZcg4ASCjGTnb.OrUzO0xbKxzfK7HTmDKcbpg3vxfUmYjVMPz6', '64dc5801cccdf1692162049.jpg', 0.00000000, NULL, 'wjSaF8zti0OYpkvh3vAvya6ArSImnprszBHid9ySqYLCswE9FHQIvHZH6d4b', 1, '2021-08-03 11:42:27', '2023-08-16 05:00:53'),
-(3, 'subadmin', 'subadmin@gmail.com', '$2y$10$GsA/9aaYDiCv0W.ErpdVoO9X.J5IVM5IulwWjBOlBPHLSUIVICvay', NULL, 0.00000000, NULL, NULL, 2, '2023-08-23 13:07:30', '2023-08-23 13:07:30'),
-(4, 'subadmin', 'subadmin@gmail.com', '$2y$10$iHZRSXR1g8USRRNp.p1C3uSZykox/xxNPeAJZEqZVVq7HoIG0uGQm', NULL, 0.00000000, NULL, NULL, 2, '2023-08-31 06:54:35', '2023-08-31 06:54:35');
+(1, 'admin', 'admin@gmail.com', '$2y$10$2/ZtZcg4ASCjGTnb.OrUzO0xbKxzfK7HTmDKcbpg3vxfUmYjVMPz6', '656a19a0176371701452192.png', 0.00000000, NULL, 'XMtewU0ZSCizZmwTtCePSqSiScAxvU6egECbhWBsDu1ZZklYnbU32X7KD82A', 1, '2021-08-03 11:42:27', '2023-12-01 17:36:32'),
+(3, 'subadmin', 'subadmin@gmail.com', '$2y$10$GsA/9aaYDiCv0W.ErpdVoO9X.J5IVM5IulwWjBOlBPHLSUIVICvay', NULL, 0.00000000, NULL, NULL, 2, '2023-08-23 13:07:30', '2023-08-23 13:07:30');
 
 -- --------------------------------------------------------
 
@@ -61,31 +60,297 @@ CREATE TABLE `biddings` (
   `trip_id` bigint UNSIGNED NOT NULL,
   `customer_id` bigint UNSIGNED NOT NULL,
   `provider_id` bigint UNSIGNED NOT NULL,
+  `service_id` int DEFAULT NULL,
   `bid_amount` bigint NOT NULL,
-  `reffered_service_provider` json DEFAULT NULL,
   `status` int NOT NULL DEFAULT '0',
+  `reffered_service_provider` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ;
 
 --
 -- Dumping data for table `biddings`
 --
 
-INSERT INTO `biddings` (`id`, `trip_id`, `customer_id`, `provider_id`, `bid_amount`, `reffered_service_provider`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 1, 48000, NULL, 1, '2023-01-29 12:02:01', '2023-01-29 12:03:36'),
-(4, 2, 3, 4, 454, NULL, 1, '2023-02-06 12:09:12', '2023-02-06 12:09:36'),
-(5, 3, 1, 2, 5000, NULL, 1, '2023-02-13 12:55:41', '2023-02-13 13:07:05'),
-(6, 21, 21, 22, 2000, NULL, 0, '2023-08-02 10:48:08', '2023-08-02 10:48:08'),
-(7, 21, 21, 24, 1800, NULL, 0, '2023-08-02 10:56:43', '2023-08-02 10:56:43'),
-(8, 25, 110, 111, 10000, NULL, 1, '2023-08-24 07:15:11', '2023-08-24 07:17:45'),
-(9, 1, 1, 111, 2000, NULL, 0, '2023-08-28 06:16:01', '2023-08-28 06:16:01'),
-(10, 26, 135, 134, 2000, NULL, 1, '2023-08-28 07:01:07', '2023-08-28 07:03:21'),
-(11, 27, 150, 149, 5000, NULL, 1, '2023-09-14 12:35:08', '2023-09-14 12:41:51'),
-(13, 28, 150, 149, 300000000, NULL, 0, '2023-09-14 13:20:01', '2023-09-14 13:20:01'),
-(14, 30, 141, 161, 500, '{\"driver_name\": \"aktar\", \"driver_mobile\": \"01750025299\", \"serial_number\": \"50\", \"serial_prefix\": \"স\"}', 1, '2023-09-20 07:24:53', '2023-09-20 07:26:03'),
-(15, 31, 141, 161, 50400, NULL, 1, '2023-09-20 07:28:07', '2023-09-20 07:28:49'),
-(16, 32, 135, 164, 345435, NULL, 1, '2023-09-25 08:13:32', '2023-09-25 08:14:14');
+INSERT INTO `biddings` (`id`, `trip_id`, `customer_id`, `provider_id`, `service_id`, `bid_amount`, `status`, `reffered_service_provider`, `created_at`, `updated_at`) VALUES
+(28, 41, 158, 159, NULL, 5000, 0, '{\"driver_name\": \"aktar65\", \"driver_mobile\": \"05215212\", \"serial_number\": \"3123\", \"serial_prefix\": \"গ\"}', '2023-09-07 08:05:30', '2023-09-07 08:05:30'),
+(29, 44, 158, 159, NULL, 500, 1, NULL, '2023-09-25 13:19:39', '2023-09-25 13:19:51'),
+(31, 46, 158, 159, NULL, 8000, 0, NULL, '2023-09-26 10:02:41', '2023-09-26 10:08:19'),
+(32, 4, 12, 159, NULL, 9000, 0, '{\"driver_name\": \"aktardriver\", \"driver_mobile\": \"01750025266\", \"serial_number\": \"50\", \"serial_prefix\": \"খ\"}', '2023-09-26 10:09:46', '2023-09-26 10:09:46'),
+(33, 47, 158, 159, NULL, 14999, 0, '{\"driver_name\": \"aktar41\", \"driver_mobile\": \"1750025266\", \"serial_number\": \"50\", \"serial_prefix\": \"ঐ\"}', '2023-09-26 10:20:09', '2023-09-26 10:20:09'),
+(34, 47, 158, 160, NULL, 7000, 1, NULL, '2023-09-26 10:55:19', '2023-09-27 07:10:17'),
+(35, 48, 158, 160, NULL, 150000, 1, NULL, '2023-09-27 07:24:47', '2023-09-27 07:25:01'),
+(36, 49, 158, 163, NULL, 50, 1, NULL, '2023-09-27 08:07:38', '2023-09-27 08:07:55'),
+(37, 50, 158, 163, NULL, 50000000000000, 1, NULL, '2023-09-27 08:11:21', '2023-09-27 08:11:34'),
+(38, 51, 158, 163, NULL, 78500000, 0, '{\"driver_name\": \"aktar\", \"driver_mobile\": \"01884036992\", \"serial_number\": \"50\", \"serial_prefix\": \"ঙ\"}', '2023-09-27 09:06:14', '2023-09-27 09:06:14'),
+(39, 53, 158, 163, NULL, 850000, 1, NULL, '2023-09-27 09:28:42', '2023-09-27 09:53:56'),
+(40, 55, 164, 163, NULL, 520, 0, NULL, '2023-10-02 12:43:38', '2023-10-02 12:43:38'),
+(41, 67, 164, 163, NULL, 7000, 1, NULL, '2023-10-03 05:11:02', '2023-10-03 05:12:58'),
+(42, 21, 21, 163, NULL, 9000, 0, NULL, '2023-10-03 05:13:30', '2023-10-03 05:13:30'),
+(43, 69, 164, 163, NULL, 600000, 1, NULL, '2023-10-03 05:22:38', '2023-10-03 05:22:59'),
+(44, 70, 164, 163, NULL, 800000, 2, NULL, '2023-10-03 05:25:33', '2023-10-04 06:53:00'),
+(45, 79, 172, 173, NULL, 2000, 1, NULL, '2023-10-11 16:11:57', '2023-10-11 16:12:31'),
+(46, 80, 172, 173, NULL, 10000, 1, NULL, '2023-10-11 16:37:48', '2023-10-11 16:38:40'),
+(47, 81, 158, 163, NULL, 5, 1, NULL, '2023-10-11 21:00:33', '2023-10-11 21:00:44'),
+(48, 82, 158, 163, NULL, 5, 1, NULL, '2023-10-15 20:25:14', '2023-10-15 20:25:23'),
+(49, 86, 158, 163, NULL, 5, 1, NULL, '2023-10-15 22:30:02', '2023-10-15 22:43:29'),
+(50, 77, 168, 163, NULL, 5, 0, NULL, '2023-10-15 22:30:11', '2023-10-15 22:30:11'),
+(51, 4, 12, 163, NULL, 5, 0, NULL, '2023-10-15 22:30:34', '2023-10-15 22:30:34'),
+(52, 1, 1, 163, NULL, 5, 0, NULL, '2023-10-15 22:30:42', '2023-10-15 22:30:42'),
+(53, 87, 158, 163, NULL, 5, 1, NULL, '2023-10-15 22:31:26', '2023-10-15 22:43:11'),
+(54, 84, 158, 163, NULL, 5, 1, NULL, '2023-10-15 22:31:57', '2023-10-15 22:43:47'),
+(55, 88, 158, 163, NULL, 5, 1, NULL, '2023-10-15 22:49:48', '2023-10-15 22:50:55'),
+(56, 85, 158, 163, NULL, 5, 0, NULL, '2023-10-15 22:50:04', '2023-10-15 22:50:04'),
+(57, 89, 175, 176, NULL, 5, 1, NULL, '2023-10-16 07:48:36', '2023-10-16 07:48:51');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bike_brands`
+--
+
+CREATE TABLE `bike_brands` (
+  `id` int NOT NULL,
+  `name` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `bike_brands`
+--
+
+INSERT INTO `bike_brands` (`id`, `name`) VALUES
+(1, 'YAMAHA'),
+(2, 'HONDA'),
+(3, 'SUZUKI'),
+(4, 'HERO'),
+(5, 'TVS'),
+(6, 'BAJAJ'),
+(7, 'LIFAN'),
+(8, 'ZONTES'),
+(9, 'HAOJUE'),
+(10, 'RUNNER'),
+(11, 'KTM'),
+(12, 'APRILIA'),
+(13, 'KAWASAKI'),
+(14, 'BENELLI'),
+(15, 'KEEWAY'),
+(16, 'TARO'),
+(17, 'VESPA'),
+(18, 'ROADMASTER'),
+(19, 'H-POWER'),
+(20, 'SPEEDER'),
+(21, 'FKM'),
+(22, 'GPX'),
+(23, 'ZNEN'),
+(24, 'MAHINDRA'),
+(25, 'WALTON');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bike_models`
+--
+
+CREATE TABLE `bike_models` (
+  `id` int NOT NULL,
+  `name` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `engine_displacement` int DEFAULT NULL,
+  `brand_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `bike_models`
+--
+
+INSERT INTO `bike_models` (`id`, `name`, `engine_displacement`, `brand_id`) VALUES
+(1, 'Yamaha R15 V4', 155, 1),
+(2, 'Yamaha R15 v3 Indian', 155, 1),
+(3, 'Yamaha R15 v3 Monster', 155, 1),
+(4, 'Yamaha R15 v3 Indonesian', 155, 1),
+(5, 'Yamaha XSR 155', 155, 1),
+(6, 'Yamaha MT 15', 155, 1),
+(7, 'Yamaha FZ-X', 155, 1),
+(8, 'Yamaha M-Slaz 150', 150, 1),
+(9, 'Yamaha Vixion 150', 149, 1),
+(10, 'Yamaha XTZ 150', 149, 1),
+(11, 'Yamaha FZS Fi v3 ABS', 149, 1),
+(12, 'Yamaha Fazer FI v2.0', 149, 1),
+(13, 'Yamaha FZS FI v2.0', 149, 1),
+(14, 'Yamaha Saluto 125', 125, 1),
+(15, 'Suzuki GSX R150 ABS', 147, 3),
+(16, 'Suzuki GSX S150', 147, 3),
+(17, 'Suzuki Bandit 150', 147, 3),
+(18, 'New Gixxer SF 150 ABS', 155, 3),
+(19, 'Suzuki Intruder 150 ABS', 155, 3),
+(20, 'Gixxer SF 150 (old edition)', 155, 3),
+(21, 'Gixxer 150 (New Edition)', 155, 3),
+(22, 'Suzuki Gixxer Dual Tone', 155, 3),
+(23, 'Suzuki Gixxer Mono Tone', 155, 3),
+(24, 'Suzuki Samurai 150', 149, 3),
+(25, 'Suzuki GSX 125', 125, 3),
+(26, 'Suzuki Hayate Special', 125, 3),
+(27, 'TVS Apache RTR 160 4V ABS', 160, 5),
+(28, 'TVS Apache RTR 160 4V DD', 160, 5),
+(29, 'TVS Apache RTR 160 4V SD', 158, 5),
+(30, 'TVS Apache RTR 160 DD', 160, 5),
+(31, 'TVS Rider 125', 125, 5),
+(32, 'TVS Max Semi Trail 125', 125, 5),
+(33, 'TVS Max 125', 125, 5),
+(34, 'TVS Stryker 125', 125, 5),
+(35, 'TVS Metro Plus (Disc)', 110, 5),
+(36, 'TVS Metro Plus (Drum)', 110, 5),
+(37, 'TVS Radeon', 110, 5),
+(38, 'TVS Metro ES', 100, 5),
+(39, 'TVS Metro KS', 100, 5),
+(40, 'New Honda CBR150R (ABS)', 149, 2),
+(41, 'Honda CBR150R MotoGP (Repsol)', 149, 2),
+(42, 'Honda CBR150R Indonesian', 149, 2),
+(43, 'Honda CB 150R ExMotion (ABS)', 149, 2),
+(44, 'Honda CB150R StreetFire', 149, 2),
+(45, 'Honda CB Hornet 160R ABS', 163, 2),
+(46, 'Honda CB Hornet 160R', 163, 2),
+(47, 'Honda CRF 150L', 149, 2),
+(48, 'Honda X-Blade 160', 163, 2),
+(49, 'Honda CB Shine SP', 125, 2),
+(50, 'Honda Livo', 110, 2),
+(51, 'Honda Dream Neo', 110, 2),
+(52, 'Honda Dio', 110, 2),
+(53, 'Honda Vario 125', 125, 2),
+(54, 'Hero Thriller 160R ABS', 163, 4),
+(55, 'Hero Thriller 160R DD', 163, 4),
+(56, 'Hero Hunk 150R ABS', 149, 4),
+(57, 'Hero Hunk 150R DD', 149, 4),
+(58, 'Hero Hunk Matt Finishing', 149, 4),
+(59, 'Hero Hunk Glossy Finishing', 149, 4),
+(60, 'Hero Achiever', 149, 4),
+(61, 'Hero Passion Xpro Xtec', 110, 4),
+(62, 'Hero Ignitor 125 (Techno)', 125, 4),
+(63, 'Hero Glamour', 125, 4),
+(64, 'Hero Passion Xpro', 109, 4),
+(65, 'Splendor iSmart Plus', 113, 4),
+(66, 'Hero Super Splendor', 125, 4),
+(67, 'Hero Splendor Plus IBS', 97, 4),
+(68, 'Hero Splendor Plus (ES)', 97, 4),
+(69, 'Hero HF Deluxe (ES)', 97, 4),
+(70, 'Runner Bolt 165R', 165, 10),
+(71, 'Runner Knight Rider 150 V2', 150, 10),
+(72, 'Runner Knight Rider 150', 150, 10),
+(73, 'Runner Turbo 125', 125, 10),
+(74, 'Runner Bullet 100 V2', 100, 10),
+(75, 'Runner F100-6A', 100, 10),
+(76, 'Runner AD-80S Deluxe', 85, 10),
+(77, 'Runner Bike RT', 86, 10),
+(78, 'Runner AD-80S Alloy', 80, 10),
+(79, 'Runner Skooty 110', 104, 10),
+(80, 'Scooter Runner Kite Plus', 110, 10),
+(81, 'Lifan KPT 150 ABS', 150, 7),
+(82, 'Lifan K19', 165, 7),
+(83, 'Lifan KPR 165 (EFI)', 165, 7),
+(84, 'Lifan KPR 150', 150, 7),
+(85, 'Lifan X-Pect 150', 150, 7),
+(86, 'Lifan KPS 150', 150, 7),
+(87, 'Lifan KP Mini 150', 150, 7),
+(88, 'Scooter Lifan Blink 125', 125, 7),
+(89, 'Lifan Glint 100', 100, 7),
+(90, 'Lifan KP 150 V2', 150, 7),
+(91, 'Scooter Lifan KPV 150', 150, 7),
+(92, 'Walton Xplore 125', 125, 25),
+(93, 'Walton Fusion 110 Ex', 110, 25),
+(94, 'Walton Cruize 100', 100, 25),
+(95, 'Walton Prizm 110', 110, 25),
+(96, 'Walton Ranger', 100, 25),
+(97, 'Walton Stylex Plus', 100, 25),
+(98, 'Walton Xplore 140', 140, 25),
+(99, 'Walton Fusion 125 NX', 125, 25),
+(100, 'Bajaj Pulsar N160', 165, 6),
+(101, 'Bajaj Pulsar NS160 Fi ABS', 160, 6),
+(102, 'Bajaj Pulsar 150 ABS', 150, 6),
+(103, 'Pulsar 150 Twin Disc', 150, 6),
+(104, 'Bajaj Pulsar Neon 150', 150, 6),
+(105, 'Bajaj Avenger Street 160', 160, 6),
+(106, 'Bajaj Pulsar NS 125', 125, 6),
+(107, 'Bajaj Discover 125', 125, 6),
+(108, 'Bajaj Discover 110', 116, 6),
+(109, 'Bajaj Platina 110 H Gear', 116, 6),
+(110, 'Bajaj Platina 100 ES', 99, 6),
+(111, 'Bajaj CT 100 ES', 99, 6),
+(112, 'KTM 125 Duke (European)', 125, 11),
+(113, 'KTM RC 125 (European)', 125, 11),
+(114, 'KTM 125 Duke (Indian)', 125, 11),
+(115, 'KTM RC 125 (Indian)', 125, 11),
+(116, 'Mahindra Centuro N1', 107, 24),
+(117, 'Mahindra Centuro Disc', 107, 24),
+(118, 'Mahindra Centuro NXT', 107, 24),
+(119, 'Mahindra Centuro Rockstar DLX', 107, 24),
+(120, 'Mahindra Centuro Rockstar', 107, 24),
+(121, 'Mahindra Pentero', 107, 24),
+(122, 'Mahindra Arro XT', 107, 24),
+(123, 'Scooter Mahindra Gusto 110 VX', 110, 24),
+(124, 'Scooter Mahindra Rodeo RZ', 125, 24),
+(125, 'Scooter Mahindra Duro DZ', 125, 24),
+(126, 'Scooter Mahindra Gusto 125', 125, 24),
+(127, 'Zontes ZT155 G1', 155, 8),
+(128, 'Zontes ZT155 GK', 155, 8),
+(129, 'Zontes ZT155 U', 155, 8),
+(130, 'Zontes ZT155 U1', 155, 8),
+(131, 'Haojue DR 160', 162, 9),
+(132, 'Haojue TR 150', 150, 9),
+(133, 'Haojue TZ 135', 135, 9),
+(134, 'Haojue KA 135', 135, 9),
+(135, 'Haojue Cool 150', 150, 9),
+(136, 'Scooter Haojue Lindy', 125, 9),
+(137, 'Aprilia GPR 150', 149, 12),
+(138, 'Aprilia Cafe 150', 149, 12),
+(139, 'Aprilia Terra 150', 150, 12),
+(140, 'Scooter Aprilia SR 150 Race ABS', 150, 12),
+(141, 'Scooter Aprilia SR 150', 155, 12),
+(142, 'Scooter Aprilia SR 125', 125, 12),
+(143, 'Kawasaki Ninja 125 ABS', 125, 13),
+(144, 'Kawasaki Z125 ABS', 125, 13),
+(145, 'Kawasaki D-Tracker', 144, 13),
+(146, 'Kawasaki KLX 150 BF', 144, 13),
+(147, 'Kawasaki KLX 150 L', 144, 13),
+(148, 'Kawasaki Z125 Pro', 125, 13),
+(149, 'Kawasaki KSR Pro', 110, 13),
+(150, 'Benelli 165S', 160, 14),
+(151, 'Benelli TNT 135', 135, 14),
+(152, 'Benelli TNT 150', 150, 14),
+(153, 'Taro GP-One Special Edition', 150, 16),
+(154, 'Taro GP One Naked Sport', 150, 16),
+(155, 'Taro GP One', 150, 16),
+(156, 'Taro GP Two', 150, 16),
+(157, 'Taro F16 CT Max', 125, 16),
+(158, 'Vespa VXL 150 (Yellow)', 150, 17),
+(159, 'Vespa SXL 150', 150, 17),
+(160, 'Vespa Elegante 150', 150, 17),
+(161, 'Vespa VXL 125', 125, 17),
+(162, 'Vespa Notte 125', 125, 17),
+(163, 'Vespa LX 125', 125, 17),
+(164, 'RoadMaster Rapido 150', 150, 18),
+(165, 'RoadMaster Rapido 165', 165, 18),
+(166, 'Roadmaster Velocity', 100, 18),
+(167, 'Roadmaster Delight', 100, 18),
+(168, 'Roadmaster Prime', 85, 18),
+(169, 'Roadmaster Prime 100', 100, 18),
+(170, 'H Power CRZ 165', 165, 19),
+(171, 'H Power RoxR', 150, 19),
+(172, 'H Power Max-Z', 155, 19),
+(173, 'H Power Recover', 100, 19),
+(174, 'H Power RS-Z', 150, 19),
+(175, 'H Power Star 100', 150, 19),
+(176, 'H Power Star 80', 80, 19),
+(177, 'Speeder NSX 165R', 165, 20),
+(178, 'Speeder Countryman', 165, 20),
+(179, 'Speeder Countryman (DD)', 165, 20),
+(180, 'Speeder Big Monster 165 Fi (DD)', 165, 20),
+(181, 'Speeder Colt 150 (SD)', 155, 20),
+(182, 'Speeder Vigo 110 (SD)', 110, 20),
+(183, 'Speeder Republic 100', 100, 20),
+(184, 'FKM Street Fighter 165 SF', 165, 21),
+(185, 'FKM Street Scrambler 165 SX', 165, 21),
+(186, 'FKM Mini Scrambler 150 MS', 150, 21),
+(187, 'GPX Demon GR165RR', 165, 22),
+(188, 'GPX Demon GR165 R', 165, 22);
 
 -- --------------------------------------------------------
 
@@ -95,8 +360,8 @@ INSERT INTO `biddings` (`id`, `trip_id`, `customer_id`, `provider_id`, `bid_amou
 
 CREATE TABLE `blog_categories` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -110,10 +375,10 @@ CREATE TABLE `blog_categories` (
 CREATE TABLE `blog_comments` (
   `id` bigint UNSIGNED NOT NULL,
   `blog_id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `comment` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `comment` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `disabled` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0=> pending, 1=> approved\r\n',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -127,7 +392,7 @@ CREATE TABLE `blog_comments` (
 
 CREATE TABLE `bookings` (
   `id` bigint UNSIGNED NOT NULL,
-  `trx` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `trx` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
   `service_id` bigint UNSIGNED NOT NULL,
   `service_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -137,17 +402,17 @@ CREATE TABLE `bookings` (
   `end_time` time DEFAULT NULL,
   `amount` decimal(8,2) NOT NULL,
   `charge` decimal(28,8) DEFAULT NULL,
-  `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `location` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `message` text COLLATE utf8mb4_unicode_ci,
+  `location` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_accepted` int NOT NULL DEFAULT '0',
   `payment_confirmed` tinyint(1) NOT NULL DEFAULT '0',
   `payment_type` int NOT NULL DEFAULT '1',
-  `payment_proof` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `payment_proof` text COLLATE utf8mb4_unicode_ci,
   `is_completed` tinyint(1) NOT NULL DEFAULT '0',
   `job_end` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1=> job end, 2=> requested for job end',
-  `btc_wallet` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `btc_wallet` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `btc_amount` decimal(28,8) DEFAULT NULL,
-  `btc_trx` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `btc_trx` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -160,9 +425,9 @@ CREATE TABLE `bookings` (
 
 CREATE TABLE `categories` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -179,8 +444,8 @@ CREATE TABLE `chats` (
   `user_id` bigint UNSIGNED DEFAULT NULL,
   `provider_id` bigint UNSIGNED DEFAULT NULL,
   `booking_id` bigint NOT NULL,
-  `message` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sender` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `message` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sender` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -194,8 +459,8 @@ CREATE TABLE `chats` (
 CREATE TABLE `cookie_consents` (
   `id` bigint UNSIGNED NOT NULL,
   `allow_modal` tinyint(1) NOT NULL DEFAULT '0',
-  `button_text` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cookie_text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `button_text` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cookie_text` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -215,8 +480,8 @@ INSERT INTO `cookie_consents` (`id`, `allow_modal`, `button_text`, `cookie_text`
 
 CREATE TABLE `coupons` (
   `id` bigint UNSIGNED NOT NULL,
-  `coupon_code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `coupon_type` enum('flat_amount','percentage','full_amount') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `coupon_code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `coupon_type` enum('flat_amount','percentage','full_amount') COLLATE utf8mb4_unicode_ci NOT NULL,
   `redeem_amount` decimal(10,2) DEFAULT NULL,
   `number_of_uses` int UNSIGNED NOT NULL DEFAULT '0',
   `number_of_uses_per_users` int UNSIGNED NOT NULL DEFAULT '0',
@@ -441,8 +706,8 @@ INSERT INTO `currencies` (`id`, `code`, `name`, `created_at`, `updated_at`) VALU
 
 CREATE TABLE `currency_countries` (
   `id` int UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL,
-  `code` varchar(2) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL,
+  `name` varchar(255) COLLATE utf8mb3_bin NOT NULL,
+  `code` varchar(2) COLLATE utf8mb3_bin NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
@@ -711,11 +976,11 @@ INSERT INTO `currency_countries` (`id`, `name`, `code`, `created_at`, `updated_a
 CREATE TABLE `districts` (
   `id` bigint UNSIGNED NOT NULL,
   `division_id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bn_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `lat` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `lon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bn_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lat` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lon` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -798,9 +1063,9 @@ INSERT INTO `districts` (`id`, `division_id`, `name`, `bn_name`, `lat`, `lon`, `
 
 CREATE TABLE `divisions` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bn_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bn_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -827,10 +1092,10 @@ INSERT INTO `divisions` (`id`, `name`, `bn_name`, `url`, `created_at`, `updated_
 
 CREATE TABLE `email_templates` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `subject` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `template` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `meaning` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subject` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `template` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `meaning` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -867,11 +1132,11 @@ INSERT INTO `email_templates` (`id`, `name`, `subject`, `template`, `meaning`, `
 
 CREATE TABLE `failed_jobs` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -883,7 +1148,7 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `faq_categories` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -904,14 +1169,14 @@ INSERT INTO `faq_categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
 
 CREATE TABLE `flutterwave_payments` (
   `id` bigint UNSIGNED NOT NULL,
-  `public_key` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `secret_key` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `logo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `public_key` text COLLATE utf8mb4_unicode_ci,
+  `secret_key` text COLLATE utf8mb4_unicode_ci,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `logo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` int NOT NULL DEFAULT '1',
   `currency_rate` double NOT NULL DEFAULT '1',
-  `currency_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `country_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `currency_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `country_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -931,12 +1196,12 @@ INSERT INTO `flutterwave_payments` (`id`, `public_key`, `secret_key`, `title`, `
 
 CREATE TABLE `gateways` (
   `id` bigint UNSIGNED NOT NULL,
-  `gateway_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `gateway_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `gateway_parameters` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gateway_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gateway_image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gateway_parameters` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `gateway_type` tinyint(1) NOT NULL COMMENT '0=> manual, 1=> autometic',
-  `user_proof_param` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `btc_wallet` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_proof_param` text COLLATE utf8mb4_unicode_ci,
+  `btc_wallet` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `btc_amount` decimal(28,8) DEFAULT NULL,
   `rate` decimal(28,8) NOT NULL,
   `charge` decimal(28,8) NOT NULL DEFAULT '0.00000000',
@@ -963,39 +1228,37 @@ INSERT INTO `gateways` (`id`, `gateway_name`, `gateway_image`, `gateway_paramete
 
 CREATE TABLE `general_settings` (
   `id` bigint UNSIGNED NOT NULL,
-  `sitename` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sitename` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `commission` decimal(5,2) NOT NULL DEFAULT '0.00',
-  `employee_target_bonus` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `site_direction` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'ltr',
-  `email_method` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `smtp_config` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `site_currency` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `currency_icon` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `employee_target_bonus` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `site_direction` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'ltr',
+  `email_method` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `smtp_config` text COLLATE utf8mb4_unicode_ci,
+  `site_currency` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `currency_icon` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_reg` tinyint(1) NOT NULL DEFAULT '1',
   `blog_comment` tinyint(1) NOT NULL DEFAULT '1',
-  `login_page` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `logo` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `desktop_banner` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `desktop_banner2` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mobile_banner` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mobile_banner2` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `default_image` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `service_default_image` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `icon` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `color` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `secondary_color` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email_from` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `login_page` text COLLATE utf8mb4_unicode_ci,
+  `logo` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `desktop_banner` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mobile_banner` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `default_image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `service_default_image` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `icon` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `color` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `secondary_color` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email_from` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `allow_recaptcha` tinyint(1) NOT NULL DEFAULT '0',
-  `recaptcha_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `recaptcha_secret` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `recaptcha_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `recaptcha_secret` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `twak_allow` tinyint(1) NOT NULL DEFAULT '0',
-  `twak_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `seo_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `twak_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `seo_description` text COLLATE utf8mb4_unicode_ci,
   `preloader_status` tinyint(1) NOT NULL,
-  `preloader_image` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `analytics_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `preloader_image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `analytics_key` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `analytics_status` tinyint(1) NOT NULL,
-  `fb_app_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fb_app_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1004,8 +1267,8 @@ CREATE TABLE `general_settings` (
 -- Dumping data for table `general_settings`
 --
 
-INSERT INTO `general_settings` (`id`, `sitename`, `commission`, `employee_target_bonus`, `site_direction`, `email_method`, `smtp_config`, `site_currency`, `currency_icon`, `user_reg`, `blog_comment`, `login_page`, `logo`, `desktop_banner`, `desktop_banner2`, `mobile_banner`, `mobile_banner2`, `default_image`, `service_default_image`, `icon`, `color`, `secondary_color`, `email_from`, `allow_recaptcha`, `recaptcha_key`, `recaptcha_secret`, `twak_allow`, `twak_key`, `seo_description`, `preloader_status`, `preloader_image`, `analytics_key`, `analytics_status`, `fb_app_key`, `created_at`, `updated_at`) VALUES
-(1, 'umamarket', 20.00, '120', 'ltr', 'smtp', '{\"smtp_host\":\"smtp.mailtrap.io\",\"smtp_username\":\"2d046afc38f85f\",\"smtp_password\":\"df88fd38431742\",\"smtp_port\":\"587\",\"smtp_encryption\":\"tls\"}', 'BDT', '৳', 1, 0, '{\"login_image\":\"63cfc5f28435b1674561010.jpg\",\"overlay\":\"Shop Everything, Anywhere, Anytime\"}', 'logo.png', 'banners/1694596652_pos1-1024x536.jpg', NULL, 'banners/1694596652_Screenshot_2.jpg', NULL, 'default_image.jpg', 'service_default_image.jpg', 'icon.png', '#428DEF', '#1862C0', 'info@umamarket.com', 0, '6LfL5YscAAAAAOsZCN5fIg8qoHkq7jjGdeI-dsLY', '6LfL5YscAAAAAJz29yGiw4je2rTyAyIOcj4jBVtT', 0, '6124fa49d6e7610a49b1c136/1fds73c17', 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi, corrupti.', 0, '613ae4374f89d1631249463.gif', 'test', 1, NULL, '2021-08-06 02:53:27', '2023-09-13 19:17:32');
+INSERT INTO `general_settings` (`id`, `sitename`, `commission`, `employee_target_bonus`, `site_direction`, `email_method`, `smtp_config`, `site_currency`, `currency_icon`, `user_reg`, `blog_comment`, `login_page`, `logo`, `desktop_banner`, `mobile_banner`, `default_image`, `service_default_image`, `icon`, `color`, `secondary_color`, `email_from`, `allow_recaptcha`, `recaptcha_key`, `recaptcha_secret`, `twak_allow`, `twak_key`, `seo_description`, `preloader_status`, `preloader_image`, `analytics_key`, `analytics_status`, `fb_app_key`, `created_at`, `updated_at`) VALUES
+(1, 'umamarket', 20.00, '120', 'ltr', 'smtp', '{\"smtp_host\":\"smtp.mailtrap.io\",\"smtp_username\":\"2d046afc38f85f\",\"smtp_password\":\"df88fd38431742\",\"smtp_port\":\"587\",\"smtp_encryption\":\"tls\"}', 'BDT', '৳', 1, 0, '{\"login_image\":\"63cfc5f28435b1674561010.jpg\",\"overlay\":\"Shop Everything, Anywhere, Anytime\"}', 'logo.png', 'banners/1693915495_Screenshot 2023-09-05 180408.png', 'banners/1693915241_truck.jpg', 'default_image.jpg', 'service_default_image.jpg', 'icon.png', '#428DEF', '#1862C0', 'info@umamarket.com', 0, '6LfL5YscAAAAAOsZCN5fIg8qoHkq7jjGdeI-dsLY', '6LfL5YscAAAAAJz29yGiw4je2rTyAyIOcj4jBVtT', 0, '6124fa49d6e7610a49b1c136/1fds73c17', 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi, corrupti.', 0, '613ae4374f89d1631249463.gif', 'test', 1, NULL, '2021-08-06 02:53:27', '2023-09-05 12:04:55');
 
 -- --------------------------------------------------------
 
@@ -1015,11 +1278,11 @@ INSERT INTO `general_settings` (`id`, `sitename`, `commission`, `employee_target
 
 CREATE TABLE `instamojo_payments` (
   `id` bigint UNSIGNED NOT NULL,
-  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `api_key` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `auth_token` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `api_key` text COLLATE utf8mb4_unicode_ci,
+  `auth_token` text COLLATE utf8mb4_unicode_ci,
   `currency_rate` double NOT NULL DEFAULT '1',
-  `account_mode` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Sandbox',
+  `account_mode` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Sandbox',
   `status` int NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -1040,9 +1303,9 @@ INSERT INTO `instamojo_payments` (`id`, `image`, `api_key`, `auth_token`, `curre
 
 CREATE TABLE `languages` (
   `id` bigint UNSIGNED NOT NULL,
-  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1057,7 +1320,7 @@ CREATE TABLE `locations` (
   `id` bigint UNSIGNED NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
   `service_id` bigint UNSIGNED NOT NULL,
-  `location` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `location` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -1071,7 +1334,7 @@ CREATE TABLE `locations` (
 
 CREATE TABLE `migrations` (
   `id` int UNSIGNED NOT NULL,
-  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -1127,12 +1390,12 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 CREATE TABLE `mollie_payments` (
   `id` bigint UNSIGNED NOT NULL,
-  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mollie_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mollie_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` int NOT NULL DEFAULT '0',
   `currency_rate` double NOT NULL DEFAULT '0',
-  `country_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `currency_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `country_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `currency_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1152,12 +1415,12 @@ INSERT INTO `mollie_payments` (`id`, `image`, `mollie_key`, `status`, `currency_
 
 CREATE TABLE `pages` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `page_order` int NOT NULL,
-  `sections` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `custom_section_data` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `seo_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sections` text COLLATE utf8mb4_unicode_ci,
+  `custom_section_data` text COLLATE utf8mb4_unicode_ci,
+  `seo_description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_dropdown` tinyint(1) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1184,7 +1447,7 @@ INSERT INTO `pages` (`id`, `name`, `slug`, `page_order`, `sections`, `custom_sec
 
 CREATE TABLE `passenger_counts` (
   `id` bigint UNSIGNED NOT NULL,
-  `number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `is_bus` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -1220,8 +1483,8 @@ INSERT INTO `passenger_counts` (`id`, `number`, `is_bus`, `created_at`, `updated
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -1233,13 +1496,13 @@ CREATE TABLE `password_resets` (
 
 CREATE TABLE `paymongo_payments` (
   `id` bigint UNSIGNED NOT NULL,
-  `secret_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `public_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `secret_key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `public_key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` int NOT NULL DEFAULT '0',
   `currency_rate` double NOT NULL DEFAULT '1',
-  `country_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `currency_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `country_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `currency_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1259,12 +1522,12 @@ INSERT INTO `paymongo_payments` (`id`, `secret_key`, `public_key`, `status`, `cu
 
 CREATE TABLE `paystack_payments` (
   `id` bigint UNSIGNED NOT NULL,
-  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `public_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `secret_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `public_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `secret_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `currency_rate` double NOT NULL DEFAULT '1',
-  `country_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `currency_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `country_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `currency_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -1285,7 +1548,7 @@ INSERT INTO `paystack_payments` (`id`, `image`, `public_key`, `secret_key`, `cur
 
 CREATE TABLE `product_tags` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -1311,15 +1574,15 @@ INSERT INTO `product_tags` (`id`, `name`, `status`, `created_at`, `updated_at`) 
 
 CREATE TABLE `razorpay_payments` (
   `id` bigint UNSIGNED NOT NULL,
-  `razorpay_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `secret_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `theme_color` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `razorpay_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `secret_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `theme_color` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `currency_rate` double NOT NULL DEFAULT '1',
-  `currency_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `country_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `currency_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `country_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `razorpay_status` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -1343,7 +1606,7 @@ CREATE TABLE `reviews` (
   `service_id` bigint UNSIGNED NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
   `review` int NOT NULL,
-  `review_message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `review_message` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -1366,9 +1629,9 @@ INSERT INTO `reviews` (`id`, `service_id`, `user_id`, `review`, `review_message`
 CREATE TABLE `schedules` (
   `id` bigint UNSIGNED NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
-  `week_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `start_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `end_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `week_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `start_time` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `end_time` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -1399,9 +1662,9 @@ INSERT INTO `schedules` (`id`, `user_id`, `week_name`, `start_time`, `end_time`,
 
 CREATE TABLE `section_data` (
   `id` bigint UNSIGNED NOT NULL,
-  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `data` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `category` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `data` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1474,26 +1737,28 @@ CREATE TABLE `services` (
   `id` bigint UNSIGNED NOT NULL,
   `category_id` bigint UNSIGNED DEFAULT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
-  `vehicle` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `truck_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `ton_capacity` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `vehicle_seat` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `bike_brand` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `bike_oil` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `serial_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `car_model` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `owner_mobile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `car_plate_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `brta_front` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `brta_back` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `car_gallery_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `service_image` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vehicle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `truck_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ton_capacity` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vehicle_seat` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bike_oil` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `serial_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `car_model` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `owner_mobile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bike_brand_id` varchar(5000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bike_model_id` varchar(5000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `car_plate_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `brta_front` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `brta_back` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `car_gallery_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `service_image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `rate` decimal(8,2) DEFAULT NULL,
-  `details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `gallery` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `location` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `reason_of_reject` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `details` text COLLATE utf8mb4_unicode_ci,
+  `gallery` text COLLATE utf8mb4_unicode_ci,
+  `user_detail_id` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `location` text COLLATE utf8mb4_unicode_ci,
+  `reason_of_reject` text COLLATE utf8mb4_unicode_ci,
   `status` tinyint(1) NOT NULL DEFAULT '0',
   `admin_approval` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1504,20 +1769,51 @@ CREATE TABLE `services` (
 -- Dumping data for table `services`
 --
 
-INSERT INTO `services` (`id`, `category_id`, `user_id`, `vehicle`, `truck_type`, `ton_capacity`, `vehicle_seat`, `bike_brand`, `bike_oil`, `serial_number`, `car_model`, `owner_mobile`, `car_plate_image`, `brta_front`, `brta_back`, `car_gallery_image`, `name`, `service_image`, `rate`, `details`, `gallery`, `location`, `reason_of_reject`, `status`, `admin_approval`, `created_at`, `updated_at`) VALUES
-(15, NULL, 161, 'ট্রাক', 'খোলা পিকআপ', '535', NULL, '0', NULL, 'গ-847', 'hhj15', '24', '650930e0f13d01695101152.jpg', '650930e135b8d1695101153.jpg', '650930e147c3d1695101153.jpg', NULL, NULL, '650a823a1d4741695187514.png', NULL, NULL, NULL, 'মির্জাগঞ্জ', NULL, 1, 1, '2023-09-19 05:25:53', '2023-09-20 05:25:14'),
-(17, NULL, 161, 'ট্রাক', 'খোলা ট্রাক', 'Doloribus aspernatur', NULL, '0', NULL, 'গ-990', 'Blanditiis neque vol', '53', '65094a81f07e81695107713.jpg', '65094a83f30f21695107715.jpg', '65094a84122591695107716.jpg', NULL, NULL, '650a821d8afed1695187485.jpg', NULL, NULL, NULL, 'ফরিদপুর', NULL, 1, 1, '2023-09-19 07:15:16', '2023-09-20 05:24:47'),
-(18, NULL, 161, 'ট্রাক', 'মিনি পিকআপ', 'Ad sunt fugiat iure', NULL, '0', NULL, 'গ-696', 'Fugiat voluptatem', '68', '65094b0d1606c1695107853.jpg', '65094b0f177fa1695107855.jpg', '65094b110dc8d1695107857.jpg', NULL, NULL, '650a81fd7cc951695187453.jpg', NULL, NULL, NULL, 'শেরপুর সদর', NULL, 1, 1, '2023-09-19 07:17:37', '2023-09-20 05:24:13'),
-(29, NULL, 161, 'ইজিবাইক', NULL, NULL, NULL, '0', NULL, NULL, NULL, '47240', '', '', '', NULL, NULL, '650a8f7955fda1695190905.jpg', NULL, NULL, NULL, 'ব্রাহ্মণপাড়া', NULL, 1, 1, '2023-09-20 06:21:45', '2023-09-20 06:22:54'),
-(30, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, '-', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, '2023-09-20 06:21:45', '2023-09-20 06:21:45'),
-(31, NULL, 164, 'প্রাইভেট কার', NULL, NULL, '5', '0', NULL, NULL, '54y6y45t45et', '342345243', '6510340b0d8141695560715.jpg', '6510340b4e96d1695560715.png', '6510340bc2fc81695560715.jpg', NULL, NULL, '6510340abae241695560714.jpg', NULL, NULL, NULL, 'বরুড়া', NULL, 1, 1, '2023-09-24 13:05:16', '2023-09-25 07:18:19'),
-(32, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'ছ-5666', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, '2023-09-24 13:05:16', '2023-09-24 13:05:16'),
-(33, NULL, 134, 'ট্রাক', 'খোলা পিকআপ', '400', NULL, '0', NULL, NULL, '54y6y45t45et', '4534663465356', '6511665a269bd1695639130.jpg', '6511665a527fa1695639130.jpg', '6511665a7d4231695639130.jpg', NULL, NULL, '65116659edcf91695639129.jpg', NULL, NULL, NULL, 'বরুড়া', NULL, 1, 1, '2023-09-25 10:52:10', '2023-09-25 10:52:44'),
-(34, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'ছ-5666', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, '2023-09-25 10:52:10', '2023-09-25 10:52:10'),
-(35, NULL, 171, 'মাইক্রো', NULL, NULL, '5', '0', NULL, NULL, '54y6y45t45et', '44564643653466', '6511678bdb9901695639435.png', '6511678c344a21695639436.jpg', '6511678c4139f1695639436.jpg', NULL, NULL, '6511678bcde981695639435.jpg', NULL, NULL, NULL, 'ব্রাহ্মণপাড়া', NULL, 1, 1, '2023-09-25 10:57:16', '2023-09-25 10:57:33'),
-(36, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'আ-5666', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, '2023-09-25 10:57:16', '2023-09-25 10:57:16'),
-(37, NULL, 175, 'মাইক্রো', NULL, NULL, '5', '0', NULL, NULL, '54y6y45t45et', '765856857', '6512680110f981695705089.jpg', '651268022850a1695705090.jpg', '651268033bdf51695705091.jpg', NULL, NULL, '651267ffad35c1695705087.jpg', NULL, NULL, NULL, 'বরুড়া', NULL, 1, 1, '2023-09-26 05:11:32', '2023-09-26 05:11:51'),
-(38, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'আ-5666', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, '2023-09-26 05:11:32', '2023-09-26 05:11:32');
+INSERT INTO `services` (`id`, `category_id`, `user_id`, `vehicle`, `truck_type`, `ton_capacity`, `vehicle_seat`, `bike_oil`, `serial_number`, `car_model`, `owner_mobile`, `bike_brand_id`, `bike_model_id`, `car_plate_image`, `brta_front`, `brta_back`, `car_gallery_image`, `name`, `service_image`, `rate`, `details`, `gallery`, `user_detail_id`, `location`, `reason_of_reject`, `status`, `admin_approval`, `created_at`, `updated_at`) VALUES
+(1, NULL, 2, 'ট্রাক', 'খোলা ট্রাক', '5', NULL, NULL, 'গ-564654', '455645', '01749717065', NULL, NULL, '63d65d2d0b3191674992941.jpeg', '63d65d2d32a851674992941.jpeg', '63d65d2d5a2301674992941.jpeg', '[\"63d65d2d815d71674992941.jpeg\",\"63d65d2dacf951674992941.jpeg\"]', NULL, '63d65d2d048501674992941.jpg', NULL, NULL, NULL, NULL, 'মেঘনা', NULL, 1, 1, '2023-01-29 11:49:01', '2023-01-29 11:52:19'),
+(2, NULL, 2, 'এম্বুল্যান্স', NULL, NULL, NULL, NULL, 'গ-6552323', NULL, '01749717065', NULL, NULL, '63d663b53b7581674994613.jpeg', '63d663b5629091674994613.jpeg', '63d663b58ed481674994613.jpeg', '[\"63d663b5b60231674994613.jpeg\"]', NULL, '63d663b50d6c81674994613.jpeg', NULL, NULL, NULL, NULL, 'ব্রাহ্মণপাড়া', NULL, 1, 1, '2023-01-29 12:16:53', '2023-08-31 06:37:10'),
+(3, NULL, 2, 'এম্বুল্যান্স', NULL, NULL, NULL, NULL, 'গ-66', NULL, '01749717065', NULL, NULL, '63d663df9f0151674994655.jpeg', '63d663dfc636d1674994655.jpeg', '63d663dff28581674994655.jpeg', '[\"63d663e02ae321674994656.jpeg\"]', NULL, '63d663df715a31674994655.jpeg', NULL, NULL, NULL, NULL, 'ব্রাহ্মণপাড়া', NULL, 1, 1, '2023-01-29 12:17:36', '2023-08-31 06:37:05'),
+(4, NULL, 4, 'এম্বুল্যান্স', NULL, NULL, NULL, NULL, 'গ-56456', NULL, '01749717065', NULL, NULL, '63e0e8c1ed6061675684033.png', '63e0e8c20817d1675684034.png', '63e0e8c216ac81675684034.png', '[\"63e0e8c2254e81675684034.png\"]', NULL, '63e0e8c1dd5b51675684033.png', NULL, NULL, NULL, NULL, 'ব্রাহ্মণপাড়া', NULL, 1, 1, '2023-02-06 11:47:14', '2023-02-06 11:49:46'),
+(5, NULL, 2, 'ভ্যান', NULL, NULL, NULL, NULL, '-', NULL, '0176512361246', NULL, NULL, '', '', '', '[]', NULL, '63ea3436b48371676293174.png', NULL, NULL, NULL, NULL, 'বরুড়া', NULL, 1, 1, '2023-02-13 12:59:34', '2023-02-13 13:00:49'),
+(6, NULL, 22, 'ট্রাক', 'মিনি পিকআপ', '50', NULL, NULL, 'গ-6516154', 'X-4523', '018111111111', NULL, NULL, '64ca335d0be4e1690973021.jpg', '64ca335d10ca11690973021.jpg', '64ca335d15e411690973021.jpg', '[\"64ca335d1bcf01690973021.jpg\",\"64ca335d20fc51690973021.jpg\",\"64ca335d260e31690973021.jpg\"]', NULL, '64ca335cba3bd1690973020.jpg', NULL, NULL, NULL, NULL, 'দেবিদ্বার', NULL, 1, 1, '2023-08-02 10:43:41', '2023-08-31 06:37:00'),
+(7, NULL, 24, 'ট্রাক', 'মিনি পিকআপ', '40', NULL, NULL, 'ক-984651', 'X-4523', '018222222222', NULL, NULL, '64ca36546e82a1690973780.jpg', '64ca3654733ff1690973780.jpg', '64ca3654783d51690973780.jpg', '[\"64ca36547d45e1690973780.jpg\",\"64ca3654820221690973780.jpg\",\"64ca365486a8a1690973780.jpg\"]', NULL, '64ca3654574281690973780.jpg', NULL, NULL, NULL, NULL, 'দেবিদ্বার', NULL, 1, 1, '2023-08-02 10:56:20', '2023-08-18 00:26:36'),
+(8, NULL, 78, 'প্রাইভেট কার', NULL, NULL, '45', NULL, 'গ-454', 'wewe545', '01750442039', NULL, NULL, '64ddfbc8a18601692269512.jpg', '64ddfbc8e6c501692269512.jpg', '64ddfbc93859c1692269513.jpg', '[\"64ddfbc9767fb1692269513.jpg\"]', NULL, '64ddfbc85e74a1692269512.jpg', NULL, NULL, NULL, NULL, 'বরুড়া', NULL, 1, 1, '2023-08-17 23:51:53', '2023-08-18 00:26:28'),
+(9, NULL, 78, 'মোটরসাইকেল', NULL, NULL, NULL, 'অকটেন', 'ক-282', 'Enim in at facere au54', '5165575676', NULL, NULL, '64de03806d67f1692271488.jpg', '64de0380d04641692271488.jpg', '64de038162a2c1692271489.jpg', '[\"64de0381bbab51692271489.jpg\"]', NULL, '64de0380037241692271488.jpg', NULL, NULL, NULL, NULL, 'রামপাল', NULL, 1, 1, '2023-08-18 00:24:50', '2023-08-18 00:26:19'),
+(10, NULL, 78, 'প্রাইভেট কার', NULL, NULL, 'Voluptatem exercita', NULL, 'ঘ-937', 'Culpa et ratione vol', '29', NULL, NULL, '64e1af335a5ab1692512051.jpg', '64e1af339166c1692512051.jpg', '64e1af33c91451692512051.jpg', '[\"64e1af340e7fb1692512052.jpg\"]', NULL, '64e1af331a8d11692512051.jpg', NULL, NULL, NULL, NULL, 'জামালগঞ্জ', NULL, 1, 1, '2023-08-20 06:14:12', '2023-08-20 06:16:23'),
+(11, NULL, 111, 'ট্রাক', 'খোলা ট্রাক', '300', NULL, NULL, 'গ-5666', '54y6y', '456356566', NULL, NULL, '64e702f464d321692861172.jpg', '64e702f4c561c1692861172.jpg', '64e702f531ba61692861173.jpg', '[\"64e702f590cce1692861173.jpg\"]', NULL, '64e702f3635711692861171.jpg', NULL, NULL, NULL, NULL, 'বরুড়া', NULL, 1, 1, '2023-08-24 07:12:53', '2023-08-24 07:14:45'),
+(12, NULL, 134, 'ট্রাক', 'খোলা ট্রাক', '300', NULL, NULL, 'ক-5666', '54y6y', '01777777777', NULL, NULL, '64ec46233ece11693206051.jpg', '64ec462368ea51693206051.jpg', '64ec4623935811693206051.jpg', '[\"64ec4623bdeba1693206051.jpg\"]', NULL, '64ec4623134ef1693206051.jpg', NULL, NULL, NULL, NULL, 'হোমনা', NULL, 1, 1, '2023-08-28 07:00:51', '2023-08-31 06:36:47'),
+(13, NULL, 142, 'ট্রাক', 'খোলা পিকআপ', 'Aliquam atque anim c', NULL, NULL, 'গ-695', '654556', '025454564654', NULL, NULL, '64f034a43758a1693463716.jfif', '64f034a43c9381693463716.jfif', '64f034a44198e1693463716.jfif', '[\"64f034a4468941693463716.jfif\"]', NULL, '64f034a4312581693463716.jfif', NULL, NULL, NULL, NULL, 'নাগেশ্বরী', NULL, 1, 1, '2023-08-31 06:35:16', '2023-08-31 06:36:42'),
+(14, NULL, 142, 'ট্রাক', 'মিনি পিকআপ', 'Dicta tempor sunt ne', NULL, NULL, 'ঙ-475', 'jhnj6546', '70', NULL, NULL, '64f038cd546881693464781.jfif', '64f038cd5987a1693464781.jfif', '64f038cd5ea1a1693464781.jfif', '[\"64f038cd63f1b1693464781.jfif\"]', NULL, '64f038cd4e2121693464781.jfif', NULL, NULL, NULL, NULL, 'কাপ্তাই', NULL, 1, 1, '2023-08-31 06:53:01', '2023-08-31 06:53:55'),
+(15, NULL, 146, 'প্রাইভেট কার', NULL, NULL, '87', NULL, 'ঘ-974', 'Aut et voluptatem et', '31857987465', NULL, NULL, '64f048fc09b921693468924.jfif', '64f048fc0f01c1693468924.jfif', '64f048fc1402b1693468924.jfif', '[\"64f048fc18f711693468924.jfif\"]', NULL, '64f048fc0302d1693468924.jfif', NULL, NULL, NULL, NULL, 'ফুলতলা', NULL, 1, 1, '2023-08-31 08:02:04', '2023-08-31 08:03:00'),
+(16, NULL, 146, 'প্রাইভেট কার', NULL, NULL, 'Do quo voluptate Nam', NULL, 'গ-408', 'Sit architecto labor', '39', NULL, NULL, '64f05562357f81693472098.jfif', '64f055623b6bd1693472098.jfif', '64f0556241c6b1693472098.jfif', '[\"64f055624837c1693472098.jfif\"]', NULL, '64f055622e0301693472098.jfif', NULL, NULL, NULL, NULL, 'রামগঞ্জ', NULL, 1, 1, '2023-08-31 08:54:58', '2023-08-31 08:55:52'),
+(17, NULL, 146, 'ট্রাক', 'খোলা ট্রাক', '565', NULL, NULL, 'গ-123', '54', '90', NULL, NULL, '64f5daa6cbfca1693833894.jpg', '64f5daa6e0dba1693833894.jpg', '64f5daa6eed091693833894.jpg', '[]', NULL, '64f5daa66589a1693833894.jpg', NULL, NULL, NULL, NULL, 'গাজীপুর সদর', NULL, 1, 1, '2023-09-04 13:24:55', '2023-09-04 13:25:45'),
+(18, NULL, 146, 'ট্রাক', 'কাভার্ড ট্রাক', '45', NULL, NULL, 'ও-4545', '4454', '45457575', NULL, NULL, '64f6c441dad1e1693893697.jpg', '64f6c441e683d1693893697.jpg', '64f6c441f2a9c1693893697.jpg', '[\"64f6c4420a0a91693893698.jpg\"]', NULL, '64f6c4417cc081693893697.jpg', NULL, NULL, NULL, NULL, 'ব্রাহ্মণপাড়া', NULL, 1, 1, '2023-09-05 06:01:38', '2023-09-05 06:48:28'),
+(19, NULL, 146, 'ট্রাক', 'কাভার্ড পিকআপ', '80000', NULL, NULL, 'গ-21', '5425125', '545872314564', NULL, NULL, '64f96f32e85321694068530.jpg', '64f96f33009191694068531.jfif', '64f96f3306e431694068531.jpg', '[\"64f96f3312b321694068531.jpg\"]', NULL, '64f96f32811ee1694068530.jfif', NULL, NULL, NULL, NULL, 'মনোহরগঞ্জ', NULL, 1, 1, '2023-09-07 06:35:31', '2023-09-07 06:36:24'),
+(20, NULL, 159, 'প্রাইভেট কার', NULL, NULL, '50', NULL, NULL, '1510', '512', NULL, NULL, '651187fcd34121695647740.jpg', '651187fede2901695647742.jpg', '651187ff011e31695647743.png', NULL, NULL, '651187faccc661695647738.jpg', NULL, NULL, NULL, NULL, 'ব্রাহ্মণপাড়া', NULL, 1, 1, '2023-09-25 13:15:43', '2023-09-25 13:16:00'),
+(21, NULL, 0, NULL, NULL, NULL, NULL, NULL, 'উ-22', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, '2023-09-25 13:15:43', '2023-09-25 13:15:43'),
+(22, NULL, 159, 'ট্রাক', 'খোলা পিকআপ', '230', NULL, NULL, NULL, '20', '01750024266', NULL, NULL, '6512afe3a81301695723491.jpg', '6512afe3c152f1695723491.png', '6512afe3e06341695723491.png', NULL, NULL, '6512afe34fdcf1695723491.jpg', NULL, NULL, NULL, NULL, 'দেবিদ্বার', NULL, 1, 1, '2023-09-26 10:18:12', '2023-09-26 10:19:03'),
+(23, NULL, 0, NULL, NULL, NULL, NULL, NULL, 'অ-20', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, '2023-09-26 10:18:12', '2023-09-26 10:18:12'),
+(24, NULL, 160, 'ট্রাক', 'খোলা পিকআপ', '50', NULL, NULL, NULL, '23', '42', NULL, NULL, '6512b85a01f761695725658.jpg', '6512b85a19b1e1695725658.jpg', '6512b85a51fa71695725658.jpg', NULL, NULL, '6512b859ec82d1695725657.jpg', NULL, NULL, NULL, NULL, 'বরুড়া', NULL, 1, 1, '2023-09-26 10:54:18', '2023-09-26 10:54:36'),
+(25, NULL, 0, NULL, NULL, NULL, NULL, NULL, 'ঐ-40', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, '2023-09-26 10:54:18', '2023-09-26 10:54:18'),
+(26, NULL, 160, 'ট্রাক', 'মিনি পিকআপ', 'Quo distinctio Sunt', NULL, NULL, NULL, 'Quos sit molestias v', '73', NULL, NULL, '6513db6dea4801695800173.jpg', '6513db6df144f1695800173.jpg', '6513db6e042971695800174.jpg', NULL, NULL, '6513db6dde67f1695800173.png', NULL, NULL, NULL, NULL, 'কটিয়াদী', NULL, 1, 0, '2023-09-27 07:36:14', '2023-09-27 07:36:14'),
+(27, NULL, 0, NULL, NULL, NULL, NULL, NULL, 'ঔ-791', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, '2023-09-27 07:36:14', '2023-09-27 07:36:14'),
+(28, NULL, 163, 'ভ্যান', NULL, NULL, NULL, NULL, NULL, NULL, '01750025299', NULL, NULL, '', '', '', NULL, NULL, '6513e25f8b33c1695801951.jpg', NULL, NULL, NULL, NULL, 'ব্রাহ্মণপাড়া', NULL, 1, 1, '2023-09-27 08:05:51', '2023-09-27 08:06:02'),
+(29, NULL, 163, 'ট্রাক', 'খোলা পিকআপ', '520', NULL, NULL, NULL, '20', '10', NULL, NULL, '6513e336592061695802166.jpg', '6513e336635e01695802166.jpg', '6513e3366e34c1695802166.jpg', NULL, NULL, '6513e335eb0bf1695802165.jpg', NULL, NULL, NULL, NULL, 'বরুড়া', NULL, 1, 1, '2023-09-27 08:09:26', '2023-09-27 08:09:41'),
+(30, NULL, 0, NULL, NULL, NULL, NULL, NULL, 'ঙ-3260', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, '2023-09-27 08:09:26', '2023-09-27 08:09:26'),
+(31, NULL, 163, 'মোটরসাইকেল', NULL, NULL, NULL, 'ব্যাটারি চালিত', NULL, NULL, '1142', '4', '58', '651a8c5d46d621696238685.jpg', '651a8c5d4ce7a1696238685.jpg', '651a8c5d529ca1696238685.jpg', NULL, NULL, '651a8c5d3f9691696238685.jpg', NULL, NULL, NULL, NULL, 'বরুড়া', NULL, 1, 1, '2023-10-02 09:24:45', '2023-10-02 12:48:31'),
+(32, NULL, 0, NULL, NULL, NULL, NULL, NULL, 'ঘ-54', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, '2023-10-02 09:24:45', '2023-10-02 09:24:45'),
+(33, NULL, 163, 'মোটরসাইকেল', NULL, NULL, NULL, 'পেট্রোল', NULL, NULL, '101', '11', '112', '651a8e4fe65041696239183.jpg', '651a8e4fec1dd1696239183.jpg', '651a8e4ff26ae1696239183.jpg', NULL, NULL, '651a8e4fdf2a81696239183.jpg', NULL, NULL, NULL, NULL, 'বরুড়া', NULL, 1, 1, '2023-10-02 09:33:04', '2023-10-02 12:49:03'),
+(34, NULL, 163, 'মোটরসাইকেল', NULL, NULL, NULL, 'পেট্রোল', NULL, NULL, '101', '11', '112', '651a8e6317ca51696239203.jpg', '651a8e631dff01696239203.jpg', '651a8e63240e71696239203.jpg', NULL, NULL, '651a8e6310a911696239203.jpg', NULL, NULL, NULL, NULL, 'বরুড়া', NULL, 1, 1, '2023-10-02 09:33:23', '2023-10-02 12:48:56'),
+(35, NULL, 163, 'মোটরসাইকেল', NULL, NULL, NULL, 'পেট্রোল', NULL, NULL, '101', '11', '112', '651a8e7867cdd1696239224.jpg', '651a8e786d5821696239224.jpg', '651a8e78739211696239224.jpg', NULL, NULL, '651a8e7860f961696239224.jpg', NULL, NULL, NULL, NULL, 'বরুড়া', NULL, 1, 1, '2023-10-02 09:33:44', '2023-10-02 12:48:42'),
+(45, NULL, 163, 'মোটরসাইকেল', NULL, NULL, NULL, 'ব্যাটারি চালিত', 'ক-52020', NULL, '204', '4', '56', '651ba4c56b60e1696310469.jpg', '651ba4c5714e01696310469.jpg', '651ba4c5771d81696310469.jpg', NULL, NULL, '651ba4c5644f21696310469.jpg', NULL, NULL, NULL, NULL, 'ব্রাহ্মণপাড়া', NULL, 1, 1, '2023-10-03 05:21:09', '2023-10-03 05:21:57'),
+(46, NULL, 169, 'ট্রাক', 'খোলা ট্রাক', '20', NULL, NULL, 'ই-2020', 'Ashoke lyland', '01914316833', NULL, NULL, '652408db246171696860379.png', '652408db47eaf1696860379.jpg', '652408db614111696860379.jpg', NULL, NULL, '652408db1cb561696860379.jpeg', NULL, NULL, NULL, '31', 'বরুড়া', NULL, 1, 1, '2023-10-10 00:06:19', '2023-10-10 00:07:42'),
+(47, NULL, 173, 'ট্রাক', 'মিনি পিকআপ', '100', NULL, NULL, 'অ-764', '646', '01722222222', NULL, NULL, '65263c34dce351697004596.jpg', '65263c34f2c161697004596.jpg', '65263c3515f6c1697004597.jpg', NULL, NULL, '65263c34c70dd1697004596.jpg', NULL, NULL, NULL, NULL, 'দেবিদ্বার', NULL, 1, 1, '2023-10-11 16:09:57', '2023-10-11 16:11:05'),
+(48, NULL, 163, 'মোটরসাইকেল', NULL, NULL, NULL, 'অকটেন', 'ই-0', NULL, '01750025266', '7', '86', '65267f3b1f6d31697021755.jpg', '65267f3b27d621697021755.jpg', '65267f3b391121697021755.png', NULL, NULL, '65267f3aebc4e1697021754.jpg', NULL, NULL, NULL, NULL, 'বরুড়া', NULL, 1, 1, '2023-10-11 20:55:55', '2023-10-11 20:58:19'),
+(49, NULL, 163, 'মোটরসাইকেল', NULL, NULL, NULL, 'অকটেন', 'ঐ-475', NULL, '01752412', '1', '14', '652bdddac1da81697373658.jpg', '652bdddacc4d51697373658.png', '652bdddae171f1697373658.png', NULL, NULL, '652bddda8e70e1697373658.jpg', NULL, NULL, NULL, NULL, 'ব্রাহ্মণপাড়া', NULL, 1, 0, '2023-10-15 22:40:59', '2023-10-15 22:40:59'),
+(50, NULL, 176, 'প্রাইভেট কার', NULL, NULL, '4', NULL, 'গ-5666', '54y6y45t45et', '667547646', NULL, NULL, '652cea421f06c1697442370.jpg', '652cea42342411697442370.jpg', '652cea424717e1697442370.jpg', NULL, NULL, '652cea41cfd9f1697442369.jpg', NULL, NULL, NULL, NULL, 'বরুড়া', NULL, 1, 1, '2023-10-16 07:46:10', '2023-10-16 07:47:43'),
+(51, NULL, 174, 'প্রাইভেট কার', NULL, NULL, '5', NULL, 'চ-333334', '54y6y45t45et65346', '343245242554', NULL, NULL, '652e5f79841331697537913.jpg', '652e5f7a389d41697537914.jpg', '652e5f7adfdce1697537914.jpg', NULL, NULL, '652e5f797660d1697537913.jpg', NULL, NULL, NULL, '35', 'কুমিল্লা সদর', NULL, 1, 1, '2023-10-17 10:18:35', '2023-10-17 12:14:41'),
+(52, NULL, 174, 'ট্রাক', 'খোলা পিকআপ', '400', NULL, NULL, 'ঘ-89999', '54y6y45t45et', '6765785676', NULL, NULL, '652e604b4561e1697538123.jpg', '652e604bef51e1697538123.jpg', '652e604cac4cc1697538124.jpg', NULL, NULL, '652e604a8427f1697538122.jpg', NULL, NULL, NULL, NULL, 'বরুড়া', NULL, 1, 1, '2023-10-17 10:22:05', '2023-10-17 12:14:55'),
+(53, NULL, 174, 'মোটরসাইকেল', NULL, NULL, NULL, 'অকটেন', 'গ-5666', NULL, '34532453445635', '2', '43', '652e6c4d6ef091697541197.jpg', '652e6c4e341a81697541198.jpg', '652e6c4ee99401697541198.jpg', NULL, NULL, '652e6c4cacfad1697541196.jpg', NULL, NULL, NULL, '36', 'ব্রাহ্মণপাড়া', NULL, 1, 0, '2023-10-17 11:13:19', '2023-10-17 11:13:19');
 
 -- --------------------------------------------------------
 
@@ -1527,7 +1823,7 @@ INSERT INTO `services` (`id`, `category_id`, `user_id`, `vehicle`, `truck_type`,
 
 CREATE TABLE `subscribes` (
   `id` bigint UNSIGNED NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1549,19 +1845,31 @@ INSERT INTO `subscribes` (`id`, `email`, `created_at`, `updated_at`) VALUES
 
 CREATE TABLE `transactions` (
   `id` bigint UNSIGNED NOT NULL,
-  `trx` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `gateway_transaction` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `trx` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gateway_transaction` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `commission` decimal(28,8) NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
   `service_id` bigint UNSIGNED DEFAULT NULL,
   `amount` int NOT NULL,
-  `currency` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `currency` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `charge` decimal(10,0) NOT NULL,
-  `details` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `details` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `transactions`
+--
+
+INSERT INTO `transactions` (`id`, `trx`, `gateway_transaction`, `commission`, `user_id`, `service_id`, `amount`, `currency`, `charge`, `details`, `type`, `created_at`, `updated_at`) VALUES
+(3, 'LLLLLLLLLL', 'bkash', 0.00000000, 163, 48, 1, 'BDT', 1, '{\"payment_id\":6771}', 'Mobile', '2023-10-15 22:07:25', '2023-10-15 22:07:25'),
+(10, 'LLLLLLLLLL', 'bkash', 0.00000000, 163, 48, 1, 'BDT', 1, '{\"payment_id\":6771}', 'Mobile', '2023-10-15 22:17:00', '2023-10-15 22:17:00'),
+(11, 'TTTTTTTTT2', 'bkash', 0.00000000, 163, 54, 1, 'BDT', 1, '{\"payment_id\":6773,\"trip_id\":84,\"bidding_id\":54}', 'Mobile', '2023-10-15 22:45:31', '2023-10-15 22:45:31'),
+(12, 'QQQQQQQQ23', 'bkash', 0.00000000, 163, 53, 1, 'BDT', 1, '{\"payment_id\":6774,\"trip_id\":87,\"bidding_id\":53}', 'Mobile', '2023-10-15 22:46:41', '2023-10-15 22:46:41'),
+(13, 'TTTTTTTTT2', 'bkash', 0.00000000, 163, 54, 1, 'BDT', 1, '{\"payment_id\":6773,\"trip_id\":84,\"bidding_id\":54}', 'Mobile', '2023-10-15 22:47:30', '2023-10-15 22:47:30'),
+(14, '1750088997', 'bkash', 0.00000000, 163, 55, 1, 'BDT', 1, '{\"payment_id\":6776,\"trip_id\":88,\"bidding_id\":55}', 'Mobile', '2023-10-15 22:52:06', '2023-10-15 22:52:06');
 
 -- --------------------------------------------------------
 
@@ -1572,25 +1880,25 @@ CREATE TABLE `transactions` (
 CREATE TABLE `trips` (
   `id` bigint UNSIGNED NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
-  `load_location` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `unload_location` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `receiver_mobile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `load_location` longtext COLLATE utf8mb4_unicode_ci,
+  `unload_location` longtext COLLATE utf8mb4_unicode_ci,
+  `receiver_mobile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `loading_date_time` timestamp NULL DEFAULT NULL,
   `vehicle_type` bigint UNSIGNED DEFAULT NULL,
   `ton` decimal(8,2) DEFAULT NULL,
   `feet` decimal(8,2) DEFAULT NULL,
-  `product_description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `product_description` longtext COLLATE utf8mb4_unicode_ci,
   `multi_load` tinyint DEFAULT NULL,
-  `second_load_location` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `second_unload_location` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `second_provider_mobile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `second_receiver_mobile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `second_load_location` longtext COLLATE utf8mb4_unicode_ci,
+  `second_unload_location` longtext COLLATE utf8mb4_unicode_ci,
+  `second_provider_mobile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `second_receiver_mobile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `third_load` tinyint DEFAULT NULL,
-  `third_load_location` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `third_unload_location` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `third_provider_mobile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `third_receiver_mobile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `product_tags` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `third_load_location` longtext COLLATE utf8mb4_unicode_ci,
+  `third_unload_location` longtext COLLATE utf8mb4_unicode_ci,
+  `third_provider_mobile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `third_receiver_mobile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_tags` longtext COLLATE utf8mb4_unicode_ci,
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0->"ordered", 1->"in-progress", 2->"completed", 3->"canceled"',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -1606,49 +1914,51 @@ CREATE TABLE `trip_infos` (
   `id` bigint UNSIGNED NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
   `vehicle_id` bigint UNSIGNED DEFAULT NULL,
-  `start_location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `end_location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bike_brand_id` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bike_model_id` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `start_location` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `end_location` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `starting_date` date DEFAULT NULL,
-  `starting_time` time DEFAULT NULL,
-  `passenger_count` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `trip_type` enum('single','up-down') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `ac_type` enum('ac','none-ac') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `duration_month` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `duration_day` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `duration_hour` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `rent_description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `patient_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `life_support_type` enum('basic','advance') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `receiver_mobile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `starting_time` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `passenger_count` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `trip_type` enum('single','up-down') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ac_type` enum('ac','none-ac') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `duration_month` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `duration_day` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `duration_hour` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `rent_description` longtext COLLATE utf8mb4_unicode_ci,
+  `patient_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `life_support_type` enum('basic','advance') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `receiver_mobile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `truck_type` bigint UNSIGNED DEFAULT NULL,
-  `ton` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `feet` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `product_description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `ton` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `feet` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_description` longtext COLLATE utf8mb4_unicode_ci,
   `second_load` tinyint DEFAULT NULL,
-  `second_load_location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `second_unload_location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `second_provider_mobile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `second_receiver_mobile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `second_load_location` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `second_unload_location` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `second_provider_mobile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `second_receiver_mobile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `third_load` tinyint DEFAULT NULL,
-  `third_load_location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `third_unload_location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `third_provider_mobile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `third_receiver_mobile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `product_tags` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `third_load_location` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `third_unload_location` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `third_provider_mobile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `third_receiver_mobile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_tags` longtext COLLATE utf8mb4_unicode_ci,
   `without_driver` tinyint DEFAULT NULL,
-  `customer_full_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `customer_address` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `customer_nid_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `customer_nid_image_front` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `customer_nid_image_back` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `customer_driving_license_image_front` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `customer_driving_license_image_back` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `parent_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `parent_mobile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `parent_nid_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `parent_nid_image_front` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `parent_nid_image_back` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` enum('ordered','in-progress','completed','canceled') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'ordered',
+  `customer_full_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `customer_address` longtext COLLATE utf8mb4_unicode_ci,
+  `customer_nid_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `customer_nid_image_front` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `customer_nid_image_back` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `customer_driving_license_image_front` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `customer_driving_license_image_back` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `parent_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `parent_mobile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `parent_nid_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `parent_nid_image_front` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `parent_nid_image_back` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` enum('ordered','in-progress','completed','canceled') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'ordered',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1657,24 +1967,40 @@ CREATE TABLE `trip_infos` (
 -- Dumping data for table `trip_infos`
 --
 
-INSERT INTO `trip_infos` (`id`, `user_id`, `vehicle_id`, `start_location`, `end_location`, `starting_date`, `starting_time`, `passenger_count`, `trip_type`, `ac_type`, `duration_month`, `duration_day`, `duration_hour`, `rent_description`, `patient_type`, `life_support_type`, `receiver_mobile`, `truck_type`, `ton`, `feet`, `product_description`, `second_load`, `second_load_location`, `second_unload_location`, `second_provider_mobile`, `second_receiver_mobile`, `third_load`, `third_load_location`, `third_unload_location`, `third_provider_mobile`, `third_receiver_mobile`, `product_tags`, `without_driver`, `customer_full_name`, `customer_address`, `customer_nid_no`, `customer_nid_image_front`, `customer_nid_image_back`, `customer_driving_license_image_front`, `customer_driving_license_image_back`, `parent_name`, `parent_mobile`, `parent_nid_no`, `parent_nid_image_front`, `parent_nid_image_back`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 'ব্রাহ্মণপাড়া', 'চান্দিনা', '2023-01-29', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '01749717065', 4, '5', '2', 'sjdfkhdskfhdsf sdfkhjdskfdsf sjjdfkjdsf', 0, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 'দাহ্য পদার্থ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ordered', '2023-01-29 11:56:02', '2023-01-29 12:03:36'),
-(3, 1, 2, 'বরুড়া', 'দাউদকান্দি', '2023-02-13', NULL, '৪ জন', 'single', 'ac', '1', '2', '2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'in-progress', '2023-02-13 12:54:32', '2023-02-13 13:07:05'),
-(4, 12, 1, 'দেবিদ্বার', 'বরুড়া', '2023-08-03', '06:48:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '017111111111', 1, '111', '11', 'safha', 0, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ordered', '2023-07-30 10:50:16', '2023-07-30 10:50:16'),
-(5, 12, 5, 'দেবিদ্বার', 'বরুড়া', '2023-08-01', '20:02:00', NULL, 'single', NULL, NULL, NULL, '9', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'srghdfgdfg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ordered', '2023-07-30 10:58:47', '2023-07-30 10:58:47'),
-(6, 78, 4, 'দেবিদ্বার', 'বরুড়া', '2023-08-02', '20:05:00', NULL, 'single', 'ac', NULL, NULL, '6', NULL, 'asasdf', 'basic', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ordered', '2023-07-30 11:02:17', '2023-07-30 11:02:17'),
-(21, 21, 1, 'দেবিদ্বার', 'বরুড়া', '2023-08-02', '16:46:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '017111111111', 1, '20', '10', 'Asavfagb', 0, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 'আপডাউন ট্রিপ,জীবিত প্রাণী', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ordered', '2023-08-02 10:45:29', '2023-08-02 10:45:29'),
-(22, 81, 7, 'দেবিদ্বার', 'বরুড়া', '2023-08-03', '16:38:00', NULL, NULL, NULL, NULL, NULL, NULL, 'asdvas asfb', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ordered', '2023-08-03 10:36:59', '2023-08-03 10:36:59'),
-(23, 106, 1, 'দেবিদ্বার', 'বরুড়া', '2023-08-30', '16:44:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '017111111111', 1, '100', NULL, 'vgjhn', 0, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 'আপডাউন ট্রিপ,জীবিত প্রাণী', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ordered', '2023-08-03 10:41:58', '2023-08-03 10:41:58'),
-(24, 80, 1, 'দেবিদ্বার', 'দেবিদ্বার', '2023-08-17', '17:14:00', '10', 'single', 'ac', NULL, NULL, NULL, NULL, NULL, NULL, '01750025244', 2, '4646', NULL, 'were', 0, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ordered', '2023-08-18 00:12:21', '2023-08-18 00:12:21'),
-(25, 106, 1, 'বরুড়া', 'ব্রাহ্মণপাড়া', '2023-08-24', '12:57:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '234567890', 1, '200', NULL, 'sdfghjk', 0, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 'দাহ্য পদার্থ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'in-progress', '2023-08-24 06:53:26', '2023-08-24 07:17:45'),
-(26, 135, 1, 'হোমনা', 'লাকসাম', '2023-08-28', '12:57:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '01111111111', 4, '2', NULL, 'erferdfg', 0, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 'আপডাউন ট্রিপ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'in-progress', '2023-08-28 06:58:06', '2023-08-28 07:03:21'),
-(27, 150, 1, 'দেবিদ্বার', 'দেবিদ্বার', '2023-09-14', '06:17:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '04564', 1, '50', '415', 'edf', 0, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'in-progress', '2023-09-14 12:18:10', '2023-09-14 12:41:51'),
-(28, 150, 2, 'বরুড়া', 'দেবিদ্বার', '2023-09-14', '18:18:00', '২ জন', 'single', 'ac', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ordered', '2023-09-14 12:18:57', '2023-09-14 12:18:57'),
-(29, 150, 1, 'দেবিদ্বার', 'বরুড়া', '2023-09-14', '06:37:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '45242', 1, '4', '452', '4iuyt', 0, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ordered', '2023-09-14 12:37:39', '2023-09-14 12:37:39'),
-(30, 141, 1, 'ব্রাহ্মণপাড়া', 'ব্রাহ্মণপাড়া', '2023-09-21', '01:06:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '01750025266', 1, '20', '50', 'rfggr', 0, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'in-progress', '2023-09-20 07:06:40', '2023-09-20 07:26:03'),
-(31, 141, 1, 'বরুড়া', 'বরুড়া', '2023-09-20', '01:27:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '01750025277', 1, '42142', '42', '424242', 0, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'in-progress', '2023-09-20 07:27:46', '2023-09-20 07:28:49'),
-(32, 135, 2, 'ব্রাহ্মণপাড়া', 'দেবিদ্বার', '2023-09-25', '14:04:00', '৫ জন', 'single', 'none-ac', NULL, '2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'in-progress', '2023-09-25 07:04:44', '2023-09-25 08:14:14');
+INSERT INTO `trip_infos` (`id`, `user_id`, `vehicle_id`, `bike_brand_id`, `bike_model_id`, `start_location`, `end_location`, `starting_date`, `starting_time`, `passenger_count`, `trip_type`, `ac_type`, `duration_month`, `duration_day`, `duration_hour`, `rent_description`, `patient_type`, `life_support_type`, `receiver_mobile`, `truck_type`, `ton`, `feet`, `product_description`, `second_load`, `second_load_location`, `second_unload_location`, `second_provider_mobile`, `second_receiver_mobile`, `third_load`, `third_load_location`, `third_unload_location`, `third_provider_mobile`, `third_receiver_mobile`, `product_tags`, `without_driver`, `customer_full_name`, `customer_address`, `customer_nid_no`, `customer_nid_image_front`, `customer_nid_image_back`, `customer_driving_license_image_front`, `customer_driving_license_image_back`, `parent_name`, `parent_mobile`, `parent_nid_no`, `parent_nid_image_front`, `parent_nid_image_back`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, NULL, NULL, 'ব্রাহ্মণপাড়া', 'চান্দিনা', '2023-01-29', '06:35pm', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '01749717065', 4, '5', '2', 'sjdfkhdskfhdsf sdfkhjdskfdsf sjjdfkjdsf', 0, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 'দাহ্য পদার্থ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ordered', '2023-01-29 11:56:02', '2023-01-29 12:03:36'),
+(3, 1, 2, NULL, NULL, 'বরুড়া', 'দাউদকান্দি', '2023-02-13', '06:07pm', '৪ জন', 'single', 'ac', '1', '2', '2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'in-progress', '2023-02-13 12:54:32', '2023-02-13 13:07:05'),
+(4, 12, 1, NULL, NULL, 'দেবিদ্বার', 'বরুড়া', '2023-08-03', '04:37pm', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '017111111111', 1, '111', '11', 'safha', 0, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ordered', '2023-07-30 10:50:16', '2023-07-30 10:50:16'),
+(5, 12, 5, NULL, NULL, 'দেবিদ্বার', 'বরুড়া', '2023-08-01', '06:37am', NULL, 'single', NULL, NULL, NULL, '9', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'srghdfgdfg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ordered', '2023-07-30 10:58:47', '2023-07-30 10:58:47'),
+(21, 21, 1, NULL, NULL, 'দেবিদ্বার', 'বরুড়া', '2023-08-02', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '017111111111', 1, '20', '10', 'Asavfagb', 0, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 'আপডাউন ট্রিপ,জীবিত প্রাণী', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ordered', '2023-08-02 10:45:29', '2023-08-02 10:45:29'),
+(43, 158, 10, NULL, NULL, 'দেবিদ্বার', 'দেবিদ্বার', '2023-09-26', '19:08', '২০ হতে ৩০ জন', 'single', 'none-ac', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ordered', '2023-09-25 13:08:47', '2023-09-25 13:08:47'),
+(44, 158, 2, NULL, NULL, 'দেবিদ্বার', 'দেবিদ্বার', '2023-09-26', '07:21', '২ জন', 'single', 'none-ac', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'in-progress', '2023-09-25 13:18:35', '2023-09-25 13:19:51'),
+(45, 158, 2, NULL, NULL, 'ব্রাহ্মণপাড়া', 'বরুড়া', '2023-09-25', '19:21', '২ জন', 'single', 'none-ac', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'in-progress', '2023-09-25 13:21:38', '2023-09-25 13:22:17'),
+(46, 158, 2, NULL, NULL, 'দেবিদ্বার', 'দেবিদ্বার', '2023-09-25', '19:25', '৩ জন', 'single', 'none-ac', '8', '14', '15', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ordered', '2023-09-25 13:26:05', '2023-09-25 13:26:05'),
+(47, 158, 1, NULL, NULL, 'বরুড়া', 'বরুড়া', '2023-09-26', '04:15pm', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '01750025266', 2, '250', '14', '5410', 0, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'in-progress', '2023-09-26 10:16:34', '2023-09-27 07:10:17'),
+(48, 158, 1, NULL, NULL, 'বরুড়া', 'দেবিদ্বার', '2023-09-13', '01:23pm', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '01750026288', 1, '50000', '250', 'sdad', 0, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'in-progress', '2023-09-27 07:24:07', '2023-09-27 07:25:01'),
+(49, 158, 7, NULL, NULL, 'বরুড়া', 'চান্দিনা', '2023-09-27', '14:06', NULL, NULL, NULL, NULL, NULL, NULL, 'xfcgvd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'in-progress', '2023-09-27 08:07:04', '2023-09-27 08:07:55'),
+(50, 158, 1, NULL, NULL, 'বরুড়া', 'চান্দিনা', '2023-09-27', '02:10pm', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '01750089899', 1, '50', '50', '560', 0, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'in-progress', '2023-09-27 08:10:41', '2023-09-27 08:11:34'),
+(51, 158, 7, NULL, NULL, 'ব্রাহ্মণপাড়া', 'ব্রাহ্মণপাড়া', '2023-09-27', '15:05', NULL, NULL, NULL, NULL, NULL, NULL, 'sda', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ordered', '2023-09-27 09:05:04', '2023-09-27 09:05:04'),
+(52, 158, 7, NULL, NULL, 'বরুড়া', 'বরুড়া', '2023-09-27', '15:26', NULL, NULL, NULL, NULL, NULL, NULL, 'gfcvgyvhuvbu', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ordered', '2023-09-27 09:26:46', '2023-09-27 09:26:46'),
+(53, 158, 7, NULL, NULL, 'দেবিদ্বার', 'ব্রাহ্মণপাড়া', '2023-09-29', '15:28', NULL, NULL, NULL, NULL, NULL, NULL, 'pk', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'in-progress', '2023-09-27 09:28:08', '2023-09-27 09:53:56'),
+(54, 158, 3, NULL, NULL, 'দেবিদ্বার', 'ব্রাহ্মণপাড়া', '2023-09-27', '16:07', '৭ জন', 'single', 'none-ac', '5', '14', '14', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ordered', '2023-09-27 10:08:29', '2023-09-27 10:08:29'),
+(74, 158, 5, '1', '4', 'হালুয়াঘাট', 'কালিগঞ্জ', '2001-11-27', '12:54', NULL, NULL, NULL, '11', '27', '5', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'Sawyer Serrano', 'Voluptate dolorum mo', 'Voluptatem dolor num', 'backend/images/trip-info/1696767924.jpg', 'backend/images/trip-info/1696767924.jpg', 'backend/images/trip-info/1696767924.jpg', 'backend/images/trip-info/1696767924.jpg', 'Cyrus Richmond', '60', '99', 'backend/images/trip-info/1696767924.jpg', 'backend/images/trip-info/1696767924.jpg', 'ordered', '2023-10-08 12:25:24', '2023-10-08 12:25:24'),
+(75, 158, 5, '12', NULL, 'দেবিদ্বার', 'দেবিদ্বার', '2023-10-09', '18:38', NULL, NULL, NULL, '1', '7', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'hfssfsf', 'sfgsfgsf', '4564', 'backend/images/trip-info/1696768726.jpg', 'backend/images/trip-info/1696768726.jpg', 'backend/images/trip-info/1696768726.jpg', 'backend/images/trip-info/1696768726.jpg', 'sfgsfgsfh', '45', '454', 'backend/images/trip-info/1696768726.jpg', 'backend/images/trip-info/1696768726.jpg', 'ordered', '2023-10-08 22:38:46', '2023-10-08 22:38:46'),
+(76, 158, 5, '2', NULL, 'দেবিদ্বার', 'দেবিদ্বার', '2023-10-11', '18:41', NULL, NULL, NULL, '1', '7', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'hfssfsf', 'sfgsfgsf', '4564', 'backend/images/trip-info/1696768778.jpg', 'backend/images/trip-info/1696768778.jpg', 'backend/images/trip-info/1696768778.jpg', 'backend/images/trip-info/1696768778.jpg', 'sfgsfgsfh', '45', '454', 'backend/images/trip-info/1696768778.jpg', 'backend/images/trip-info/1696768778.jpg', 'ordered', '2023-10-08 22:39:38', '2023-10-08 22:39:38'),
+(77, 168, 1, NULL, NULL, 'বরুড়া', 'বরুড়া', '2023-10-10', '07:54pm', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '089283427484', 1, '20', '20', 'Koil', 0, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ordered', '2023-10-09 23:54:14', '2023-10-09 23:54:14'),
+(78, 168, 2, NULL, NULL, 'বরুড়া', 'বরুড়া', '2023-10-09', '19:55', '২ জন', 'single', 'none-ac', '7', '7', '7', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ordered', '2023-10-09 23:55:30', '2023-10-09 23:55:30'),
+(79, 172, 1, NULL, NULL, 'দেবিদ্বার', 'দেবিদ্বার', '2023-10-10', '11:04pm', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '01711111111', 1, '100', '100', 'kjwdjwk', 0, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 'আপডাউন ট্রিপ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'in-progress', '2023-10-11 16:03:35', '2023-10-11 16:12:31'),
+(80, 172, 1, NULL, NULL, 'চিতলমারী', 'লক্ষ্মীপুর সদর', '2023-10-11', '12:36pm', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '01759568087', 1, '40', '40', 'food', 0, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'in-progress', '2023-10-11 16:34:51', '2023-10-11 16:38:40'),
+(81, 158, 5, NULL, NULL, 'ব্রাহ্মণপাড়া', 'বরুড়া', '2023-10-11', '16:59', NULL, 'single', NULL, '7', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'in-progress', '2023-10-11 20:59:51', '2023-10-11 21:00:44'),
+(82, 158, 7, NULL, NULL, 'দেবিদ্বার', 'দেবিদ্বার', '2023-10-15', '16:24', NULL, NULL, NULL, NULL, NULL, NULL, 'scdsd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'in-progress', '2023-10-15 20:24:53', '2023-10-15 20:25:23'),
+(83, 158, 7, NULL, NULL, 'বরুড়া', 'বরুড়া', '2023-10-15', '18:21', NULL, NULL, NULL, NULL, NULL, NULL, 'sdfsdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ordered', '2023-10-15 22:21:47', '2023-10-15 22:21:47'),
+(84, 158, 5, NULL, NULL, 'চান্দিনা', 'চান্দিনা', '2023-10-16', '18:22', NULL, 'single', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'in-progress', '2023-10-15 22:22:26', '2023-10-15 22:43:47'),
+(85, 158, 7, NULL, NULL, 'ব্রাহ্মণপাড়া', 'বরুড়া', '2023-10-17', '18:22', NULL, NULL, NULL, NULL, NULL, NULL, 'hfgth', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ordered', '2023-10-15 22:22:54', '2023-10-15 22:22:54'),
+(86, 158, 7, NULL, NULL, 'বরুড়া', 'চান্দিনা', '2023-10-19', '18:23', NULL, NULL, NULL, NULL, NULL, NULL, 'thfgh', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'in-progress', '2023-10-15 22:24:11', '2023-10-15 22:43:29'),
+(87, 158, 5, NULL, NULL, 'বরুড়া', 'ব্রাহ্মণপাড়া', '2023-10-19', '18:24', NULL, 'single', NULL, '6', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'in-progress', '2023-10-15 22:24:44', '2023-10-15 22:43:11'),
+(88, 158, 7, NULL, NULL, 'ব্রাহ্মণপাড়া', 'ব্রাহ্মণপাড়া', '2023-10-15', '18:49', NULL, NULL, NULL, NULL, NULL, NULL, 'dfdsf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'completed', '2023-10-15 22:49:22', '2023-10-15 22:52:06'),
+(89, 175, 2, NULL, NULL, 'দেবিদ্বার', 'দেবিদ্বার', '2023-10-16', '23:40', '৪ জন', 'single', 'none-ac', NULL, NULL, '16', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'in-progress', '2023-10-16 07:39:38', '2023-10-16 07:48:51');
 
 -- --------------------------------------------------------
 
@@ -1684,7 +2010,7 @@ INSERT INTO `trip_infos` (`id`, `user_id`, `vehicle_id`, `start_location`, `end_
 
 CREATE TABLE `truck_types` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -1712,9 +2038,9 @@ INSERT INTO `truck_types` (`id`, `name`, `status`, `created_at`, `updated_at`) V
 CREATE TABLE `unions` (
   `id` bigint UNSIGNED NOT NULL,
   `upazila_id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bn_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bn_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -6281,9 +6607,9 @@ INSERT INTO `unions` (`id`, `upazila_id`, `name`, `bn_name`, `url`, `created_at`
 CREATE TABLE `upazilas` (
   `id` bigint UNSIGNED NOT NULL,
   `district_id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bn_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bn_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -6794,40 +7120,40 @@ INSERT INTO `upazilas` (`id`, `district_id`, `name`, `bn_name`, `url`, `created_
 CREATE TABLE `users` (
   `id` bigint UNSIGNED NOT NULL,
   `user_type` int NOT NULL,
-  `fname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `username` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `referral` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lname` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `username` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `referral` varchar(60) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `balance` decimal(28,8) DEFAULT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mobile` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `link_token` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mobile_otp_expire_at` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mobile_verified_at` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `designation` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `experience` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `qualification` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mobile` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `link_token` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mobile_otp_expire_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mobile_verified_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `designation` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `details` text COLLATE utf8mb4_unicode_ci,
+  `experience` text COLLATE utf8mb4_unicode_ci,
+  `qualification` text COLLATE utf8mb4_unicode_ci,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `featured` tinyint(1) NOT NULL DEFAULT '0',
-  `social` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `social` text COLLATE utf8mb4_unicode_ci,
   `ev` int NOT NULL DEFAULT '0',
   `verification_code` int DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0',
   `approved_at` timestamp NULL DEFAULT NULL,
   `bonus` int DEFAULT NULL,
-  `target` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `division_id` int NOT NULL,
+  `target` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `division_id` int DEFAULT NULL,
   `district_id` int DEFAULT NULL,
   `upazila_id` int DEFAULT NULL,
   `union_id` int DEFAULT NULL,
-  `employee_role` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `employee_role` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `has_agent_id` int DEFAULT NULL,
-  `has_agent_name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `has_agent_name` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_by` bigint DEFAULT NULL
@@ -6849,56 +7175,27 @@ INSERT INTO `users` (`id`, `user_type`, `fname`, `lname`, `username`, `referral`
 (22, 2, 'Service Provider', NULL, '', NULL, '', NULL, 'service-provider@gmail.com', '018111111111', 'C1jZQt3f37A4qSZUyTV8sOEh', NULL, '2023-08-02 16:21:47', '64ca2f1bcc2dc1690971931.jpg', NULL, NULL, NULL, NULL, NULL, '$2y$10$rQkoZRLNF2HSPRDh8tbHtOY8bznWYcV4j66pMWgm3WMCrgMU.lWr6', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, '2023-08-02 10:21:26', '2023-08-02 10:25:31', 0),
 (23, 1, 'Customer 2', NULL, '', NULL, '', NULL, 'customer2@gmail.com', '017222222222', 'ceHmfAr1DUZ1W1fcJYVbU2QH', NULL, '2023-08-02 16:24:23', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$zC5ZwrcoN5fmnevU6ZW0j.f/LUGgQpWbt7gaHmE.zD51VGrhD1O5.', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, '2023-08-02 10:24:04', '2023-08-02 10:24:23', 0),
 (24, 2, 'Service Provider', NULL, '', NULL, '', NULL, 'service-provider2@gmail.com', '018222222222', 'XOtj4hDxCI7MkD6JxSFNxIwB', NULL, '2023-08-02 16:49:35', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$OObnfzDSh7aPVU2IgiUY7ePCCrskvQzySrO4ijTdJ3HPi6bV1qOIO', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, '2023-08-02 10:49:10', '2023-08-02 10:49:35', 0),
-(29, 4, 'agent', 'first', 'agent', NULL, '', NULL, 'agent@gmail.com', '01329497106', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$qMkzHmADz0A.BqJd86BLJuzKVkbwzoTz1NZYgKbBVL8dUrkUT2Dvm', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 1, 4, 39, 0, NULL, NULL, NULL, '2023-08-09 12:21:59', '2023-08-10 11:12:16', 0),
-(67, 4, 'aktar', 'r', 'aktarozzaman', NULL, '', NULL, 'aktar@gmail.com', '01750025266', NULL, '2023-08-17 17:24:06', '778788', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$9zIqBPL/Z7d3gv7s5DSgFuS9GzqAkcuEEOvFx8AA.mqoYGu9dNdTW', 0, NULL, 0, 748186, 1, NULL, NULL, NULL, NULL, 3, 25, 196, 0, NULL, NULL, NULL, '2023-08-17 18:41:46', '2023-08-18 00:19:06', 0),
-(75, 2, 'sdjsndjn', NULL, '', NULL, '', NULL, 'aktarozzaman5002@gmail.com', '01750025266', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$DE0ZdstQzWhSE/qicAs/zeTftue6a.gGJSmFSba6agF1OAZT5ZjAu', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, '2023-08-17 23:12:28', '2023-08-17 23:12:28', 0),
-(77, 2, 'aktar22', NULL, '', NULL, '', NULL, NULL, '01750442038', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$joTd7wB5GsK4e0XXJtJLhOqwnwCbv5bhizvtpQr9r39Z7oHYE7aC6', 0, NULL, 0, 502767, 1, NULL, NULL, NULL, NULL, 1, 5, 43, 0, NULL, NULL, NULL, '2023-08-17 23:46:03', '2023-08-17 23:46:03', 68),
-(78, 2, 'aktarvendor', NULL, '', NULL, '', NULL, NULL, '01750442039', NULL, NULL, '2023-08-17 16:49:29', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$eQqlMYpaWKlGcPEKQwTTjeGVE52Czbww9E2ppOvccA06GOjnUhiue', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 1, 10, 88, 0, NULL, NULL, NULL, '2023-08-17 23:49:29', '2023-08-23 05:01:44', 68),
-(80, 1, 'gazi', NULL, '', NULL, '', NULL, 'gazi@gmail.com', '01750025244', NULL, '2023-08-17 17:12:33', '090394', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$xQZvUxMmpqOhnWnr6.68LOQ0TOOa5SOah09/wx7iFV1Ra96PzGyK.', 0, NULL, 0, 280766, 1, NULL, NULL, NULL, NULL, 6, 50, 381, 0, NULL, NULL, NULL, '2023-08-18 00:06:33', '2023-08-18 00:07:33', 68),
-(81, 1, 'aktarcustomer1', 'customer', 'customer', NULL, '', NULL, 'aktarcustomer@gmail.com', '01750026255', NULL, NULL, '2023-08-20 12:24:10', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$FCe3nABu5NYHlLlSs0uDS.ydDXIdtneGffBiRaEcSLeHrmyjDKje6', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 2, 13, 113, 0, NULL, NULL, NULL, '2023-08-20 06:24:10', '2023-08-20 06:24:10', 68),
-(82, 4, 'Alfreda Vazquez', 'Yardley Vasquez', 'wenef', NULL, '', NULL, 'xiteci@mailinator.com', '+1 (228) 993-6168', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$ugPbRx5xVFjywh2tEkufQeCEgjiKIdYQpvzeK4.z0aBcIfefj0cdW', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 1, 2, 18, 0, NULL, NULL, NULL, '2023-08-20 09:15:24', '2023-08-20 09:15:24', 0),
-(83, 4, 'Jasper Alexander', 'Dorothy Leblanc', 'feneryb', NULL, '', NULL, 'sopazo@mailinator.com', '+1 (369) 562-1815', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$aosyZgg8yH9A01oN8OKxwO6zMDARlqya1PLOpyuMrqdpF4g0fdAUy', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 7, 54, 404, 0, NULL, NULL, NULL, '2023-08-20 09:17:01', '2023-08-20 09:17:01', 0),
-(87, 4, 'Ella Pittman', 'Vanna Espinoza', 'welesucip', NULL, '', NULL, 'mimuqako@mailinator.com', '+1 (429) 866-8593', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$vCvPDcih54GjxYm6qhGw6e6xmoAB0hMTaBUfnM6tsBZBx/kFmHOKS', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 4, 32, 242, 0, NULL, NULL, NULL, '2023-08-20 09:19:27', '2023-08-20 09:19:27', 0),
-(90, 4, 'Pascale Hurley', 'Lucian Rodriguez', 'bolazavu', NULL, '', NULL, 'mifu@mailinator.com', '+1 (518) 946-9443', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$RI1QzzpKSheyiD1jRhNEJ.fhyI1FgHnQ9BB7mV6O4HyoP390.JwmG', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 8, 62, 462, 0, NULL, NULL, NULL, '2023-08-20 09:35:39', '2023-08-20 09:35:39', 0),
 (91, 4, 'Paul Bentley', 'Adrienne Olson', 'putucyqe', NULL, '', NULL, 'beseresose@mailinator.com', '+1 (522) 811-3876', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$n3Q2ctjHJvb3C9o69t1W9eFHhAxsOsTeFmoqj4RgEXjdwpPY2qDdG', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 3, 23, 189, 0, NULL, NULL, NULL, '2023-08-20 09:38:09', '2023-08-20 09:38:09', 0),
 (95, 4, 'Wylie Whitney', 'Ingrid Henry', 'hanike', NULL, '', NULL, 'zyxytiqim@mailinator.com', '+1 (166) 385-6301', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$0tLV6nKh0rzm.cZpdTh5WONxjpQK6tVMp48Js0gNqIXR83gOAVx96', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 7, 58, 435, 0, NULL, NULL, NULL, '2023-08-20 10:16:58', '2023-08-20 10:16:58', 0),
-(96, 4, 'Scarlett Mccormick', 'Rylee Herman', 'munujezisu', NULL, '', NULL, 'vicomedoz@mailinator.com', '+1 (621) 892-8987', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$F.CxU8S/zd0eUgx31HmuQuVaFgirygsUi79kkrvdzWHNawoQshtOy', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 2, 14, 122, 0, NULL, NULL, NULL, '2023-08-20 10:29:53', '2023-08-20 10:29:53', 0),
-(97, 4, 'Ahmed Church', 'Gemma Jimenez', 'pahomaw', 'Aute343', '', NULL, 'julexo@mailinator.com', '+1 (755) 501-6643', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$nFmna2dzZWg1v1AS8rO.zOZ7OSSEMiFGqu45MNYG0WtCwLZsaw9oy', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 8, 62, 462, 0, NULL, NULL, NULL, '2023-08-20 11:22:01', '2023-08-20 11:22:01', 0),
-(105, 1, 'testcustomer8', NULL, '', NULL, '', NULL, 'testcustomer8@gmail.com', '013294453425', NULL, NULL, '2023-08-21 13:53:26', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$o561wZf1JhsLHXJ3ZWjY3uSkluh0n5/n9X83Od3KgVwkT18y4g6Va', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 4, 30, 231, 2102, NULL, NULL, NULL, '2023-08-21 07:53:27', '2023-08-21 07:53:27', 29),
-(106, 2, 'VendorByAgent7', NULL, '', NULL, '', NULL, 'VendorByAgent7@gmail.com', '01329497345445345', NULL, NULL, '2023-08-21 13:58:02', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$u1z8DG9/mALQMahXe7hbu.kk.cMcoptXKegonLw6GSNOlF0157qkC', 0, NULL, 0, NULL, 1, '2023-08-29 10:21:18', NULL, NULL, NULL, 5, 36, 279, 2498, NULL, NULL, NULL, '2023-08-21 07:58:02', '2023-08-29 10:21:18', 29),
-(107, 1, 'agentcustomer8', NULL, '', NULL, '', NULL, 'agentcustomer8@gmail.com', '01329495634556', NULL, NULL, '2023-08-21 14:09:37', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$9cLDZhgFTmxv53Y5NAqWQeoPPeUoiCR.hjTsq2a/bKH5cgUvknRkq', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 4, 30, 230, 2091, NULL, NULL, NULL, '2023-08-21 08:09:37', '2023-08-21 08:09:37', 30),
-(110, 1, 'lastcustomer', NULL, '', NULL, '', NULL, 'lastcustomer@gmail.com', '10666666666', 'WhQwXs4L2mH36vo37CZUg1eN', NULL, '2023-08-22 07:34:56', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$plNWpWFQ75IkypausBhMx.EAEzAvoGQBPkW7BK/3HrPT9SnXt9P96', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 1, 4, 40, 374, NULL, NULL, NULL, '2023-08-21 10:10:04', '2023-08-22 07:39:16', 0),
-(111, 2, 'lastprovider', NULL, '', NULL, '', NULL, 'lastprovider@gmail.com', '10777777777', 'DQjtH66NC5peQGzcth6O5GA4', NULL, '2023-08-22 14:00:31', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$nZoQX1DsBNEno5qXHRkFJO3my3UU7555zLa41iL91DtMS4749thqC', 0, NULL, 0, NULL, 1, '2023-08-27 10:20:58', NULL, NULL, NULL, 1, 6, 57, 530, NULL, NULL, NULL, '2023-08-22 07:57:26', '2023-08-29 10:20:58', 0),
-(128, 3, 'Zone Manager', 'Employee', 'zmemp', '324234fewrtww34', '', NULL, 'zmemp@gmail.com', '432534254325325', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$HBQ.RTj9OfIH6wGZiMwj7O3dDQCCc.gP0f9p4BJQ91n0S6UFy4ulK', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 3, 20, 172, 1530, 'Zone Manager', NULL, NULL, '2023-08-27 07:19:36', '2023-08-31 06:05:25', NULL),
-(134, 2, 'vendorbybpemp', NULL, '', NULL, '', NULL, 'vendorbybpemp@gmail.com', '01777777777', NULL, NULL, '2023-08-28 12:25:22', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$T.RsOOasrKccoBN95WyeguZNqUABL4jWuCwGBUjGociRTBCp7MX9i', 0, NULL, 0, NULL, 1, '2023-08-29 10:22:10', NULL, NULL, NULL, 6, 49, 376, 3411, NULL, NULL, NULL, '2023-08-28 06:25:22', '2023-08-29 10:22:10', 127),
-(135, 1, 'customerbybpemp', NULL, '', NULL, '', NULL, 'customerbybpemp@gmail.com', '01111111111', NULL, NULL, '2023-08-28 12:49:47', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$bqjrxKfuyprS5dtoJZWrFuj3QpUqY21OLEoi1wgZh1TAlmv3jVzCy', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 4, 31, 239, 2171, NULL, NULL, NULL, '2023-08-28 06:49:47', '2023-08-28 06:49:47', 127),
-(137, 1, 'today', NULL, '', NULL, '', NULL, 'today@gmail.com', '013294971063453245', NULL, NULL, '2023-08-28 14:36:58', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$2ZifWKPBMugDfdvx3uRSpucpAurB2ks6w/lckYlIIUcpAVol3o8va', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 7, 60, 455, 4181, NULL, NULL, NULL, '2023-08-28 08:36:58', '2023-08-28 08:36:58', 127),
-(138, 1, 'test11', NULL, '', NULL, '', NULL, 'test11@gmail.com', '223424324', NULL, NULL, '2023-08-28 15:53:07', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$RD0lZ2o4teZC7VRSfHPuueEh7hpRSkdH3jRONbEq.XEJ0cdZdVwGW', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 6, 50, 382, 3473, NULL, NULL, NULL, '2023-08-28 09:53:07', '2023-08-28 09:53:07', 30),
-(139, 3, 'aktaremployee', 'aktaremployee', 'aktaremployee', '01750025299', '', NULL, 'aktaremployee@gmail.com', '01750025299', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$c14HGFaPNbvH7gjq4sc8suKqYqZG05xJWTXb0w.HsSRjPgzNk/Sf2', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 1, 1, 11, 130, 'Team Leader', NULL, NULL, '2023-08-31 05:10:13', '2023-08-31 06:14:31', NULL),
-(140, 3, 'Perry Kline', 'Xander Donaldson', 'votelarir', '3603', '', NULL, 'venigew@mailinator.com', '1 (145) 424-3603', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$g9XJXjL9gUCTmA.i6GiN7OUV8qfKiogG7Qvh1cJxHvDti.SghnYxm', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 1, 6, 54, 496, 'Team Leader', NULL, NULL, '2023-08-31 06:12:53', '2023-08-31 06:12:53', NULL),
-(141, 1, 'employeeaktar', NULL, '', NULL, '', NULL, 'employeeaktar@gmail.com', '01750025288', NULL, NULL, '2023-08-31 12:18:46', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$CCWIhAzN7QFDPf9X4lPXce5VC9h3zvxncHVLe0E9anJ23MOZEnGpa', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 3, 20, 172, 1536, NULL, NULL, NULL, '2023-08-31 06:18:46', '2023-08-31 06:18:46', 139),
-(142, 3, 'Demo', 'Employee', 'demoemployeezm', 'EMPZM', '', NULL, 'demoemployeezm@gmail.com', '01811111111', NULL, NULL, NULL, 'backend/images/user/16483796724386562136.jpg', NULL, NULL, NULL, NULL, NULL, '$2y$10$xUsvBzEsxQZ.9r10ZYlXiueOJkmm9SJI8sCc0svmmgX1tTonBKCRK', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 'Zone Manager', NULL, NULL, '2023-08-31 08:59:08', '2023-08-31 09:37:25', NULL),
-(144, 3, 'Demo', 'Employee', 'demoemployeebp', 'EMPBP', '', NULL, 'demoemployeebp@gmail.com', '01311111111', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$B0J6CaHcCzelkURU6PjM5eVK0T3ev6nkG8Hog5hl6HrdfG647mnxm', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 'Business Promoter', NULL, NULL, '2023-08-31 09:10:48', '2023-08-31 09:12:31', NULL),
-(145, 3, 'Demo', 'Employee', 'demoemployeetl', 'EMPTL', '', NULL, 'demoemployeetl@gmail.com', '01911111111', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$WkcVm0QqfBKbWyJYzEt1nug9GpKS9LPEVU42k8kA6ZuJTgqYjB0z.', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 'Team Leader', NULL, NULL, '2023-08-31 09:13:52', '2023-08-31 09:14:01', NULL),
-(146, 1, 'Demo Customer', NULL, '', NULL, '', NULL, 'democustomer@gmail.com', '01411111111', NULL, NULL, '2023-08-31 15:46:27', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$hXdhqdxv7hDZIRM4TrkUQeOmKUVBR1xjcW5GMUzTIm2r5C4ZmA8cK', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, NULL, NULL, NULL, '2023-08-31 09:46:27', '2023-08-31 09:46:27', 142),
-(147, 2, 'Demo Customer', NULL, '', NULL, '', NULL, 'demovendor@gmail.com', '01511111111', NULL, NULL, '2023-08-31 15:48:10', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$uN/TzNe2sM06aNmPm/MSgOs9rm9QbXIQVRklbm4jXkPCgWWtLuijm', 0, NULL, 0, NULL, 1, '2023-09-14 11:38:17', NULL, NULL, NULL, 1, 1, 1, 1, NULL, NULL, NULL, '2023-08-31 09:48:10', '2023-09-14 11:38:17', 142),
-(148, 4, 'Demo', 'Agent', 'demoagent', 'AGNT', '', NULL, 'demoagent@gmail.com', '01611111111', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$JxlnXGL7AL29T12GUp4H0.EjmuQL6ryH1DG6BRAVuCWwhfIzR7M6K', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, NULL, NULL, NULL, '2023-08-31 10:31:46', '2023-08-31 10:31:55', NULL),
-(149, 2, 'TestServiceProvider', NULL, '', NULL, '', NULL, 'TestServiceProvider@gmail.com', '01912345678', 'r69v9dSzdFXKCiSGfSAizlqs', NULL, '2023-09-14 17:36:22', '650683a3cbf7e1694925731.jpg', NULL, NULL, NULL, NULL, NULL, '$2y$10$JwEOp5yHTQ3pTAmBnG989eGodVlGQ0p9/UaKvRfrQcsX5INS02Rp6', 0, NULL, 0, NULL, 1, '2023-09-14 11:38:10', NULL, NULL, NULL, 1, 1, 1, 2, NULL, NULL, NULL, '2023-09-14 11:34:19', '2023-09-17 04:42:12', NULL),
-(150, 1, 'aktarcustomer', NULL, '', NULL, '', NULL, NULL, '01712345678', 'SjAsJD9RCSFLaKVffWaKK8by', NULL, '2023-09-14 18:16:52', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$DjepLI/mP2m6VCx/osoahOaucuhOtDLg9BLL4mvo6cFtQDs/uvDLa', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 5, 36, 280, 2510, NULL, NULL, NULL, '2023-09-14 12:16:02', '2023-09-14 12:16:52', 142),
-(151, 2, 'aktarprovidertest', NULL, '', NULL, '', NULL, 'aktarprovidertest@gmail.com', '01750024266', 'KfzwMRlSqj71s3N7bl1fvWdS', NULL, '2023-09-17 10:54:19', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$j0Fpq4tyVaLOozU8yA4GwOnPfp4RyDOREXkpJOl3m2SyBiK5Tc2pu', 0, NULL, 0, NULL, 1, '2023-09-17 04:55:52', NULL, NULL, NULL, 3, 20, 172, 1536, NULL, NULL, NULL, '2023-09-17 04:53:37', '2023-09-17 04:55:52', 142),
-(152, 2, 'aktarvendortest1', NULL, '', NULL, '', NULL, NULL, '01750026277', 'qflqcQoIArBP7R0vFLnH2TRb', '2023-09-17 12:10:53', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$EXoHQ3Xq4xOkkBn3S.LNcuco5ccYjDGBfS1HhPHGl7sf013S87A4i', 0, NULL, 0, 103987, 1, '2023-09-26 05:03:17', NULL, NULL, NULL, 1, 7, 61, 582, NULL, NULL, NULL, '2023-09-17 06:05:52', '2023-09-26 05:03:17', 145),
-(153, 2, 'aktarvendortest9', NULL, '', NULL, '', NULL, NULL, '01750025233', 'JoctjHfZWlMUkoWEu1uwFm7o', '2023-09-17 12:14:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$lbD/XNacl3unU.yX49VQquLDdkoMk6fLtpYTpi4KnfsJUNFFQ4vga', 0, NULL, 0, 282828, 1, '2023-09-26 05:03:15', NULL, NULL, NULL, 5, 38, 293, 2623, NULL, NULL, NULL, '2023-09-17 06:08:59', '2023-09-26 05:03:15', 145),
-(154, 2, 'ghfghf', NULL, '', NULL, '', NULL, NULL, '01750226421', 'VOmHaGda3nnM6vh0kq8oo0qQ', '2023-09-17 12:22:57', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$bAENui.UVrZggQqkUUlMLON0JVrS2uoajvRQ2Imm6jZEhMTx7QV2W', 0, NULL, 0, 423546, 1, '2023-09-26 05:03:14', NULL, NULL, NULL, 5, 36, 273, 2452, NULL, NULL, NULL, '2023-09-17 06:17:55', '2023-09-26 05:03:14', NULL),
-(155, 1, 'hjkhjkghj', NULL, '', NULL, '', NULL, NULL, '017500258265', 'qJSfu8wWYjbZGGcK6SImxbid', '2023-09-17 12:24:46', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$Ejw9o2zNtBsh2bUHaN/rju1R4U5PJR5EFcpfmp3X7WSvRV05Pcjg2', 0, NULL, 0, 548092, 1, NULL, NULL, NULL, NULL, 4, 30, 231, 2099, NULL, NULL, NULL, '2023-09-17 06:19:45', '2023-09-17 06:19:46', 142),
-(156, 1, 'Yetta Hampton', NULL, '', '140', '', NULL, 'zufavik@mailinator.com', '010750024277', '3iAqIbsuCeYBFhqhXna1D5Gl', '2023-09-17 13:50:04', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$gbR5UsN.HktDDlfIZkBFQev149tEwVwiia.K7g84QcmSKASSaW4Cu', 0, NULL, 0, 148494, 1, NULL, NULL, NULL, NULL, 2, 13, 114, 1044, NULL, NULL, NULL, '2023-09-17 07:45:03', '2023-09-17 07:45:04', 3603),
-(157, 2, 'Avram Alvarez', NULL, '', '148', '', NULL, 'vamykiw@mailinator.com', '01750025296', '40dOMRcaARhyuVP2ydk10qPr', '2023-09-17 13:55:39', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$JzAHwM6ldHgvBhBKARN5vOkZ..yT8/4ZnOL8ygG.3UsRAdo65xkfy', 1, NULL, 0, 812626, 1, '2023-09-17 08:32:53', NULL, NULL, NULL, 2, 12, 104, 952, NULL, NULL, NULL, '2023-09-17 07:50:36', '2023-09-24 12:52:52', 0),
-(158, 1, 'May Chapman', NULL, '', NULL, '', NULL, 'viruf@mailinator.com', '0175005658', '6rFPuo0bf7qgboLGksCuNRzE', '2023-09-17 13:57:30', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$tkyY9HvEbhtDTTU5JUyqWuEFIYmIGwWis8ZVBz/lxXFUblmaJTrcC', 0, NULL, 0, 558680, 1, NULL, NULL, NULL, NULL, 4, 30, 230, 2087, NULL, NULL, NULL, '2023-09-17 07:52:29', '2023-09-17 07:52:30', NULL),
-(159, 1, 'Ruby Morin', NULL, '', 'AGNT', '', NULL, 'hilo@mailinator.com', '01750202583', 'YlyQUK8MHdH6R3FWaCW05jU2', NULL, '2023-09-17 13:54:20', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$hYlT4X551cd6X1ptQlcjPuwQYQ913RfYCe6zQWV.fYg.JsI2PNUku', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 4, 31, 235, 2141, NULL, NULL, NULL, '2023-09-17 07:53:32', '2023-09-17 07:54:20', 0),
-(160, 1, 'Candice Fulton', NULL, '', 'AGNT', '', NULL, 'cigyq@mailinator.com', '01750027209', 'DQZKZ8FAsBYcRsrUl5J9RtMZ', NULL, '2023-09-17 13:56:58', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$ajzr4KlyZSxXqaIpcTN78.8tdT0qeWsy4sqR7is8PbXeCjYz7JDmC', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 1, 8, 76, 773, NULL, NULL, NULL, '2023-09-17 07:56:30', '2023-09-17 07:56:58', 0),
-(161, 2, 'Haley Gonzalez', NULL, '', 'AGNT', '', NULL, 'aktarvendortest63@gmail.com', '01750023299', 'uQxXb7j2p7ORgJ8X7HtLQpP9', NULL, '2023-09-17 13:59:54', '650a7b63522f21695185763.jpg', NULL, NULL, '20', 'HSC', NULL, '$2y$10$B2KrubHgYPFvAbhyzu7ZFOCHA79Whzh2uHjyaERre14ynSzKvUwCi', 1, NULL, 0, NULL, 1, '2023-09-17 08:32:49', NULL, NULL, NULL, 3, 20, 172, 1536, NULL, NULL, NULL, '2023-09-17 07:59:29', '2023-09-24 12:52:16', 0),
-(163, 4, 'aktaragent47', 'aktar', 'aktar', 'ABCD', '', NULL, 'aktar5@gmail.com', '01750025222', NULL, NULL, NULL, 'backend/images/user/aktar.jpg', NULL, NULL, '20', NULL, NULL, '$2y$10$1SEaKVEcR6d5yo99D5jT2.KOHUddl0dYFW9KT2wY5sEhZwc5oNo9m', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 5, 39, 302, 2704, NULL, NULL, NULL, '2023-09-19 10:17:21', '2023-09-19 12:45:22', NULL),
-(164, 2, 'SRVendor', NULL, '', NULL, '', NULL, 'srvendor@gmail.com', '01222222222', 'TtPFEPcQlVwF3BT03iYHYuC2', NULL, '2023-09-24 18:59:49', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$XoF77h52ofbo43Yier.zU.ZFdnSSCmOEG/WHYW56FUe9ZZAC5GEeG', 0, NULL, 0, NULL, 1, '2023-09-24 12:58:01', NULL, NULL, NULL, 1, 10, 94, 910, NULL, NULL, NULL, '2023-09-24 12:55:26', '2023-09-24 12:59:49', NULL),
-(171, 2, 'SRProvider', NULL, '', NULL, '', NULL, 'spprovider@gmail.com', '01333333333', 'tuH5DD6nK3ykhbFxshsqyqN2', NULL, '2023-09-25 16:50:36', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$vq4cBke4WG1PQvwWqinYL.px0Xq/TT6ExkoOxKvghG0KbAgGGlRFO', 0, NULL, 0, NULL, 1, '2023-09-25 10:53:02', NULL, NULL, NULL, 1, 9, 86, 875, NULL, NULL, NULL, '2023-09-25 10:49:40', '2023-09-25 10:53:02', NULL);
+(96, 4, 'Scarlett Mccormick', 'Rylee Herman', 'munujezisu', 'abc', '', NULL, 'vicomedoz@mailinator.com', '+1 (621) 892-8987', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$F.CxU8S/zd0eUgx31HmuQuVaFgirygsUi79kkrvdzWHNawoQshtOy', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 2, 14, 122, 0, NULL, NULL, NULL, '2023-08-20 10:29:53', '2023-08-20 10:29:53', 0),
+(158, 1, 'Aktar', NULL, '', '12345', '', NULL, 'vadijybawi@mailinator.com', '01750025266', 'XnbrQb8h0e1IN6qnwKeGyogA', '2023-09-25 18:27:58', '2023-09-25 18:27:58', '65140422794261695810594.jpg', NULL, NULL, NULL, NULL, NULL, '$2y$10$bSXB6b4VJbvjs09bpWEIIeH9rJKmDNSWetKcR0yqQlk62lqIXylc.', 0, NULL, 0, 316301, 1, NULL, NULL, NULL, NULL, 1, 8, 72, 726, NULL, NULL, NULL, '2023-09-25 09:43:14', '2023-09-27 10:29:54', 12345),
+(159, 2, 'aktarprovider', NULL, '', '12345', '', NULL, NULL, '01750025277', '1Ftk0EbZiGAgWR1pJZryaSmi', NULL, '2023-09-25 19:12:27', '6511882ba09f71695647787.jpg', NULL, NULL, NULL, NULL, NULL, '$2y$10$2sZd7lklLzdNCLzN4f6U0OlJg6ouV3QMYH4nRW//TrGyZ6qZBqdI.', 0, NULL, 0, NULL, 1, '2023-09-25 13:13:23', NULL, NULL, NULL, 3, 23, 189, 1708, NULL, NULL, NULL, '2023-09-25 13:11:24', '2023-09-25 13:16:27', 12345),
+(160, 2, 'aktartestprovider', NULL, '', '12345', '', NULL, NULL, '01750025211', '5PDpG4tKRhImpziU0kJ1Cba1', NULL, '2023-09-26 16:49:41', '6512cbbb666131695730619.jpg', NULL, NULL, NULL, NULL, NULL, '$2y$10$sxnYLnJLg0JfcEwScraKROJDe5rJ7b7OFNQflZAqP4nld/cRJegea', 0, NULL, 0, NULL, 1, '2023-09-26 10:50:26', NULL, NULL, NULL, 5, 38, 298, 2670, NULL, NULL, NULL, '2023-09-26 10:48:58', '2023-09-26 12:16:59', 12345),
+(161, 3, 'aktaremployee', NULL, 'aktare', '123', '', NULL, 'aktar@gmail.com', '01750025233', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$5dSufBdjpn2aEhABUz2diek0vqh0iwkHZbLwzULq.7VsAxfZ2YBSi', 0, NULL, 0, NULL, 1, NULL, NULL, '15', NULL, 2, 13, 116, 1058, NULL, NULL, NULL, '2023-09-26 12:44:10', '2023-10-04 07:46:39', NULL),
+(162, 4, 'aktaragent', NULL, 'aktaragent', '12', '', NULL, 'aktaragent@gmail.com', '01750025244', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$XPkJO3faoGHonXwZLYtuReN477AbVAmnaG7iq9IWN0VXs/UnJWOai', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 2, 13, 117, 1067, NULL, NULL, NULL, '2023-09-26 12:47:51', '2023-09-26 12:47:51', NULL),
+(163, 2, 'aktarproviderlast', NULL, '', '12345', '', NULL, 'aktartest@gmail.com', '01750025248', 'GxLJGczSHwgDQEOTaIRETQy0', NULL, '2023-09-27 14:03:47', '651bac2b5f8af1696312363.png', NULL, NULL, NULL, NULL, NULL, '$2y$10$xycVlvJqUSTu6EEoZ0gaQ.pBSt3m79XyuJMpeHskXViLu00eiPvyW', 0, NULL, 0, NULL, 1, '2023-09-27 08:04:52', NULL, NULL, NULL, 3, 21, 180, 1618, NULL, NULL, NULL, '2023-09-27 08:03:15', '2023-10-03 05:52:43', 12345),
+(166, 3, 'Olympia Frost', 'Christian Hurst', 'jedyxas', '123456789', '', NULL, 'cajetogeji@mailinator.com', '1 (434) 764-1319', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$Qdaxl8UNbqcnZ4slv7YmLuh5lBxQOarBJ9ZZo9KDuPnlIy6phJxru', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 3, 24, NULL, NULL, 'Team Leader', NULL, NULL, '2023-10-08 10:46:51', '2023-10-08 10:46:51', NULL),
+(167, 1, 'dfsf', NULL, '', NULL, '', NULL, 'dfdffd@gmail.com', '01758220332', NULL, NULL, '2023-10-08 17:16:57', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$q9goCiRPhskw37HZUrkR6uodby3UsceX/Sz/0jwGaMsnzkSRwu66S', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 4, 32, 247, 2229, NULL, NULL, NULL, '2023-10-08 11:16:57', '2023-10-08 11:16:57', 166),
+(168, 1, 'Sumon', NULL, '', NULL, '', NULL, NULL, '01914316833', 'jce0Ec5COuD8QJg4axygtHKQ', NULL, '2023-10-09 19:52:57', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$VNBXZ5yUx10XILlvr43RVunQlc3MJdLA.xRUqwLUAaZYJE1G5kYgi', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, '2023-10-09 23:52:33', '2023-10-09 23:52:57', NULL),
+(169, 2, 'Latim', NULL, '', NULL, '', NULL, NULL, '01403127248', '11u2ZpKDTBTGCp2mPMw3d4xv', NULL, '2023-10-09 19:58:15', '652409786a96d1696860536.jpg', NULL, NULL, NULL, NULL, NULL, '$2y$10$4sZQokTD80CsgaHUigb4vOHkAvHI3XJOUck.0vcZjNzOXCDVjlHJW', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 3, 20, 177, 1587, NULL, NULL, NULL, '2023-10-09 23:57:40', '2023-10-10 00:11:48', NULL),
+(170, 1, 'HGVUUY www.google.com Sippigh', NULL, '', NULL, '', NULL, 'clara2379@mail.ru', 'HGVUUY www.google.com', 'KiOhHyDlg6gmrhhN0tXZa7QU', '2023-10-10 01:32:54', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$sDmpsNJ1oa2quFy48CYdHe/6pPQYxVvZ1fuEQxZF.t.P9tc933fhm', 0, NULL, 0, 538415, 1, NULL, NULL, NULL, NULL, 8, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-10 05:27:51', '2023-10-10 05:27:54', NULL),
+(171, 1, 'Mfjejdjw uUHHUUJdiwjdiwj твагРГРГРГашоаувауга jhduwifjefheufheuh eufhudfjhuhоарвоаруауаруг аРГРПРОРПРПРПавоыорр dhfhsdhsdhudhsfuHGHGH fhdhhhffh umamarket.com', NULL, '', NULL, '', NULL, 'yasen.krasen.13+91957@mail.ru', '82146418742', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$zHzdtgoJrJdYm67TLZw3t.d05oRpnCxmtgpwU4cMVQzSRUH95eiSe', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 8, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-11 01:17:39', '2023-10-11 01:17:39', 0),
+(172, 1, 'Test Customer', NULL, '', NULL, '', NULL, 'testcustomer@gmail.com', '01759568080', 'BFJzEqpKLYlA1IpEiUQIBrts', NULL, '2023-10-11 11:54:43', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$F6kLRZZ1IgDNUBoiXL/BC.MZVoGXmJC0T28W9PlubR/pjPYh8jLiy', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-11 15:52:16', '2023-10-11 15:54:43', NULL),
+(173, 2, 'Test Service Provider', NULL, '', NULL, '', NULL, 'testserviceprovider@gmail.com', '01724721000', 'fxQi8LoeW171GGOhPuiEGpta', NULL, '2023-10-11 11:59:31', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$FqY.pzeb/Vq14hud/2LAZe.Qyrctzt13SKKX1t8IVEPnZ3br9YQ56', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-11 15:58:37', '2023-10-11 15:59:31', NULL),
+(174, 2, 'vendorSajid', NULL, '', NULL, '', NULL, NULL, '02222222222', 'GGss2e8JWRzTl4Ce59sDLAba', NULL, '2023-10-16 10:50:48', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$Qne548j0dIsZouhSzqtlD.NlXkMD9t5hnNzPF1bmwQbvYzKKfd/8.', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 1, 8, 77, 789, NULL, NULL, NULL, '2023-10-16 04:50:04', '2023-10-16 04:50:48', NULL),
+(175, 1, 'customerSajid', NULL, '', NULL, '', NULL, NULL, '01111111111', '6cjR2QEiPHE38dzuP2wIXixi', NULL, '2023-10-16 13:37:51', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$xoSObj47mE3ERKYADVdJUubfu6AesoQcH7MVEDLjxXxSVS9XLD7SS', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 1, 8, 79, 810, NULL, NULL, NULL, '2023-10-16 07:37:18', '2023-10-16 07:37:51', NULL),
+(176, 2, 'providersajid', NULL, '', NULL, '', NULL, NULL, '01995146105', '2D8fyWTd8ARv4aiSXA70V26Z', NULL, '2023-10-16 13:44:54', NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$CHDAzeN8vkVeQbmV.G3OtuJlwCyENt4j4B1KPY.04iiKQ/noOK4mW', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 3, 27, 208, 1892, NULL, NULL, NULL, '2023-10-16 07:44:18', '2023-10-16 07:44:54', NULL),
+(177, 4, 'Agent', 'Sajid', 'Agentsajid', 'fdgf', '', NULL, 'agentSajid@gmail.com', '32343443', NULL, NULL, NULL, 'backend/images/user/animated.jpg', NULL, NULL, NULL, NULL, NULL, '$2y$10$2/ZtZcg4ASCjGTnb.OrUzO0xbKxzfK7HTmDKcbpg3vxfUmYjVMPz6', 0, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, 3, 20, 172, 1531, NULL, NULL, NULL, '2023-10-30 13:28:16', '2023-10-30 13:48:17', NULL);
 
 -- --------------------------------------------------------
 
@@ -6909,22 +7206,22 @@ INSERT INTO `users` (`id`, `user_type`, `fname`, `lname`, `username`, `referral`
 CREATE TABLE `user_details` (
   `id` bigint UNSIGNED NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
-  `provider_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `company_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `company_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `country` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nid_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nid_front` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nid_back` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `driving_experience` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `driving_license_front` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `driving_license_back` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `provider_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `company_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `company_address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `country` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nid_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nid_front` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nid_back` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `driving_experience` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `driving_license_front` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `driving_license_back` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `city` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `state` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `zip` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `city` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `state` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `zip` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -6939,22 +7236,16 @@ INSERT INTO `user_details` (`id`, `user_id`, `provider_type`, `company_name`, `c
 (5, 11, NULL, NULL, NULL, 'sdsadsad', NULL, NULL, NULL, NULL, NULL, NULL, 'gffgfdgfdg', '2023-07-30 08:50:53', '2023-07-30 08:50:53', 'asdsad', 'dsad', '323313'),
 (8, 22, 'মালিক', NULL, 'Khulna', NULL, '621961684351610', '64ca2e267c2e31690971686.jpg', '64ca2e26c46361690971686.jpg', NULL, '64ca335d2dd5f1690973021.jpg', '64ca335d33f0e1690973021.jpg', NULL, '2023-08-02 10:21:26', '2023-08-02 10:43:41', NULL, NULL, NULL),
 (9, 24, 'মালিক', NULL, 'Khulna', NULL, '351468413654354', '64ca34a62a79a1690973350.jpg', '64ca34a6302551690973350.jpg', NULL, '64ca36548cb871690973780.jpg', '64ca365492d6e1690973780.jpg', NULL, '2023-08-02 10:49:10', '2023-08-02 10:56:20', NULL, NULL, NULL),
-(13, 75, NULL, NULL, NULL, NULL, '01750025266', '64ddf28cd03361692267148.jpg', '64ddf28d2a0c81692267149.jpg', NULL, NULL, NULL, NULL, '2023-08-17 23:12:29', '2023-08-17 23:12:29', NULL, NULL, NULL),
-(15, 77, NULL, NULL, NULL, NULL, '01750442038', '64ddfa6b494d21692269163.jpg', '64ddfa6b8bc251692269163.jpg', NULL, NULL, NULL, NULL, '2023-08-17 23:46:03', '2023-08-17 23:46:03', NULL, NULL, NULL),
-(16, 78, 'ড্রাইভার', 'Green Bird Inc', 'Ab similique aperiam', NULL, 'Iste commodi aliqua', '64ddfb393249b1692269369.jpg', '64ddfb397429b1692269369.jpg', 'Sunt nihil fuga A', '64e1af3448e4d1692512052.jpg', '64e1af347f8c91692512052.jpg', NULL, '2023-08-17 23:49:29', '2023-08-20 06:14:12', NULL, NULL, NULL),
-(18, 106, NULL, NULL, NULL, NULL, '345265465656', '64e3190a291ce1692604682.jpg', '64e3190b4502b1692604683.jpg', NULL, NULL, NULL, NULL, '2023-08-21 07:58:04', '2023-08-21 07:58:04', NULL, NULL, NULL),
-(20, 111, 'ড্রাইভার', 'jghgjfjgf', 'y6yhythg', NULL, '6566766', '64e46a66f15691692691046.jpg', '64e46a672a1341692691047.jpg', '6', '64e702f5eedc21692861173.jpg', '64e702f65ad4e1692861174.jpg', NULL, '2023-08-22 07:57:27', '2023-08-24 07:12:54', NULL, NULL, NULL),
-(24, 134, 'মালিক', '5yrtyhhg', 'fgthgdbf', NULL, '878767676567', '64ec3dd2490ca1693203922.jpg', '64ec3dd30849e1693203923.jpg', '5', '6511665a8c7401695639130.png', '6511665adad431695639130.jpg', NULL, '2023-08-28 06:25:23', '2023-09-25 10:52:11', NULL, NULL, NULL),
-(25, 147, NULL, NULL, NULL, NULL, '621961684351610', '64f061daebf6e1693475290.jpg', '64f061daf25131693475290.jpg', NULL, NULL, NULL, NULL, '2023-08-31 09:48:11', '2023-08-31 09:48:11', NULL, NULL, NULL),
-(26, 149, 'মালিক', 'Mccormick Good LLC', 'Numquam quia nulla p', NULL, 'Ex modi sint nostru', '6502efbb95cb51694691259.jpg', '6502efbc0d5431694691260.jpg', 'Quod magni sit asper', '65030785353a11694697349.png', '6503078557c9c1694697349.png', NULL, '2023-09-14 11:34:20', '2023-09-14 13:15:49', NULL, NULL, NULL),
-(27, 151, NULL, NULL, NULL, NULL, '01750024266', '650686512cf8d1694926417.jpg', '6506865167f751694926417.jpg', NULL, NULL, NULL, NULL, '2023-09-17 04:53:37', '2023-09-17 04:53:37', NULL, NULL, NULL),
-(28, 152, NULL, NULL, NULL, NULL, '01750026277', '650697400318a1694930752.jpg', '65069740655961694930752.png', NULL, NULL, NULL, NULL, '2023-09-17 06:05:52', '2023-09-17 06:05:52', NULL, NULL, NULL),
-(29, 153, NULL, NULL, NULL, NULL, '01750026277', '650697fbbf5df1694930939.jpg', '650697fbd45741694930939.png', NULL, NULL, NULL, NULL, '2023-09-17 06:09:00', '2023-09-17 06:09:00', NULL, NULL, NULL),
-(30, 154, NULL, NULL, NULL, NULL, '35262523452', '65069a13c42ef1694931475.png', '65069a13e50501694931475.jpg', NULL, NULL, NULL, NULL, '2023-09-17 06:17:56', '2023-09-17 06:17:56', NULL, NULL, NULL),
-(31, 157, NULL, NULL, NULL, NULL, '01750025296', '6506afcc0366f1694937036.jpg', '6506afcc150301694937036.jpg', NULL, NULL, NULL, NULL, '2023-09-17 07:50:38', '2023-09-17 07:50:38', NULL, NULL, NULL),
-(32, 161, 'মালিক', 'Simpson and Frank Co', 'Non magna non soluta', NULL, '216323', '65093e7f953281695104639.jpg', '65093e7fa88461695104639.jpg', 'At numquam ipsum rep', '6509872c009991695123244.jpg', '6509872c0ba541695123244.jpg', NULL, '2023-09-17 07:59:30', '2023-09-19 11:34:04', NULL, NULL, NULL),
-(33, 164, 'মালিক', '5yrtyhhg', 'tergergttre', NULL, '76756565565465', '651031beb25661695560126.png', '651031bf78a201695560127.jpg', '6', '6510340c07a2e1695560716.jpg', '6510340c49d111695560716.png', NULL, '2023-09-24 12:55:27', '2023-09-24 13:05:16', NULL, NULL, NULL),
-(36, 171, 'মালিক', 'jghgjfjgf', 'tgrtggd', NULL, '234324433243443', '651165c452e6f1695638980.jpg', '651165c48c1741695638980.jpg', '6', '6511678c6ebe81695639436.jpg', '6511678c7b77f1695639436.png', NULL, '2023-09-25 10:49:40', '2023-09-25 10:57:16', NULL, NULL, NULL);
+(27, 159, 'মালিক', 'jbjafa', 'dfdfaf', NULL, '01750025277', '651186fcaa8c11695647484.jpg', '651186fd0bd9f1695647485.jpg', '10', '6513d47d0366c1695798397.jpg', '6513d47d1c02f1695798397.png', NULL, '2023-09-25 13:11:25', '2023-09-27 07:06:37', NULL, NULL, NULL),
+(28, 160, 'মালিক', 'adadc', 'dacdacac', NULL, '01750025211', '6512b71a557c91695725338.jpg', '6512b71a5b6e21695725338.jpg', '150', NULL, NULL, NULL, '2023-09-26 10:49:00', '2023-09-26 10:54:18', NULL, NULL, NULL),
+(29, 163, 'মালিক', 'Cherry Fowler Traders', 'Aperiam a non ea par', NULL, 'Velit inventore in', '6513e1c3c7cd81695801795.jpg', '6513e1c40910f1695801796.png', 'Eiusmod debitis vel', NULL, NULL, NULL, '2023-09-27 08:03:16', '2023-10-02 09:39:59', NULL, NULL, NULL),
+(30, 169, NULL, 'Roton trading', 'Noapara bazar, abhoynagor, Jessore, khulna', NULL, '253588236', '652406d4e22c41696859860.jpg', '652406d5191f61696859861.jpg', '20', '65240a23bc4491696860707.jpg', '65240a23e484e1696860707.jpg', NULL, '2023-10-09 23:57:41', '2023-10-10 00:11:48', NULL, NULL, NULL),
+(31, 169, 'ড্রাইভার', 'Roton trading', 'Noapara bazar, abhoynagor, jessore,khulna', NULL, '253588236', NULL, NULL, '15', '652408da95bce1696860378.jpg', '652408dacff741696860378.jpg', NULL, '2023-10-10 00:06:19', '2023-10-10 00:06:19', NULL, NULL, NULL),
+(32, 173, 'মালিক', 'hsgs', 'srgfx', NULL, '7646374587687', '6526398dae9cf1697003917.jpg', '6526398dc84e11697003917.jpg', NULL, '65263c34987f21697004596.jpg', '65263c34afa121697004596.jpg', NULL, '2023-10-11 15:58:37', '2023-10-11 16:09:56', NULL, NULL, NULL),
+(33, 174, 'মালিক', 'jghgjfjgf', 'erfegerg', NULL, '34324534252435', '652cc0fc524881697431804.jpg', '652cc0fcaa9871697431804.jpg', '6', '652e6049d84721697538121.jpg', '652e604a3215c1697538122.jpg', NULL, '2023-10-16 04:50:04', '2023-10-17 10:22:02', NULL, NULL, NULL),
+(34, 176, 'মালিক', 'fgerhgh', 'gfrfgf', NULL, '4324234432', '652ce9d2cfcd31697442258.jpg', '652ce9d343ada1697442259.jpg', NULL, '652cea41a54631697442369.jpg', '652cea41bab571697442369.jpg', NULL, '2023-10-16 07:44:19', '2023-10-16 07:46:09', NULL, NULL, NULL),
+(35, 174, 'ড্রাইভার', 'jghgjfjgf', 'feff', NULL, '34324534252435', NULL, NULL, '7', '652e5f77a7b271697537911.jpg', '652e5f78b606d1697537912.jpg', NULL, '2023-10-17 10:18:33', '2023-10-17 10:18:33', NULL, NULL, NULL),
+(36, 174, 'ড্রাইভার', 'jghgjfjgf22222', 'erfegerg2222', NULL, '34324534252435222', NULL, NULL, '2', '652e7630ccd2a1697543728.jpg', '652e6c4be79951697541195.jpg', NULL, '2023-10-17 11:13:16', '2023-10-17 11:55:29', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -6964,8 +7255,8 @@ INSERT INTO `user_details` (`id`, `user_id`, `provider_type`, `company_name`, `c
 
 CREATE TABLE `vehicles` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -6994,12 +7285,12 @@ INSERT INTO `vehicles` (`id`, `name`, `status`, `created_at`, `updated_at`) VALU
 
 CREATE TABLE `withdraw_gateways` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `charge` decimal(28,8) NOT NULL,
-  `charge_type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `charge_type` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `min_withdraw` decimal(8,2) NOT NULL,
   `max_withdraw` decimal(8,2) NOT NULL,
-  `withdraw_instruction` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `withdraw_instruction` text COLLATE utf8mb4_unicode_ci,
   `status` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -7015,12 +7306,12 @@ CREATE TABLE `withdraw_logs` (
   `id` bigint UNSIGNED NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
   `withdraw_gateway_id` bigint UNSIGNED NOT NULL,
-  `trx` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_data` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `trx` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_data` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `charge` decimal(28,8) NOT NULL,
   `balance_remains` decimal(28,8) NOT NULL,
   `amount` decimal(8,2) NOT NULL,
-  `reason_of_reject` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `reason_of_reject` text COLLATE utf8mb4_unicode_ci,
   `status` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -7034,7 +7325,7 @@ CREATE TABLE `withdraw_logs` (
 
 CREATE TABLE `worksheets` (
   `id` bigint UNSIGNED NOT NULL,
-  `attendence_selfie` varchar(900) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `attendence_selfie` varchar(900) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `employee_id` bigint UNSIGNED NOT NULL,
   `daily_target` int DEFAULT '0',
   `target_achive` int DEFAULT '0',
@@ -7052,18 +7343,31 @@ CREATE TABLE `worksheets` (
 --
 
 INSERT INTO `worksheets` (`id`, `attendence_selfie`, `employee_id`, `daily_target`, `target_achive`, `target_extra_achive`, `target_non_achive`, `total_final_achive`, `final_non_achive`, `bonus_point`, `created_at`, `updated_at`) VALUES
-(0, NULL, 30, 0, 1, 0, 0, 0, 0, 0, '2023-08-28 09:32:06', '2023-08-28 09:53:07'),
-(0, NULL, 48, 0, 1, 0, 0, 0, 0, 0, '2023-08-28 09:32:06', '2023-08-28 09:53:07'),
-(0, NULL, 66, 0, 1, 0, 0, 0, 0, 0, '2023-08-28 09:32:06', '2023-08-28 09:53:07'),
-(0, NULL, 68, 0, 1, 0, 0, 0, 0, 0, '2023-08-28 09:32:06', '2023-08-28 09:53:07'),
-(0, NULL, 92, 0, 1, 0, 0, 0, 0, 0, '2023-08-28 09:32:06', '2023-08-28 09:53:07'),
-(0, NULL, 93, 0, 1, 0, 0, 0, 0, 0, '2023-08-28 09:32:06', '2023-08-28 09:53:07'),
-(0, NULL, 94, 0, 1, 0, 0, 0, 0, 0, '2023-08-28 09:32:06', '2023-08-28 09:53:07'),
-(0, NULL, 98, 0, 1, 0, 0, 0, 0, 0, '2023-08-28 09:32:06', '2023-08-28 09:53:07'),
-(0, NULL, 102, 0, 1, 0, 0, 0, 0, 0, '2023-08-28 09:32:06', '2023-08-28 09:53:07'),
-(0, NULL, 127, 0, 1, 0, 0, 0, 0, 0, '2023-08-28 09:32:06', '2023-08-28 09:53:07'),
-(0, NULL, 128, 0, 1, 0, 0, 0, 0, 0, '2023-08-28 09:32:06', '2023-08-28 09:53:07'),
-(0, NULL, 129, 0, 1, 0, 0, 0, 0, 0, '2023-08-28 09:32:06', '2023-08-28 09:53:07');
+(1, 'uploads/selfies/1695817958_truck1.jpg', 30, 50, 1, 0, 0, 0, 0, 0, '2023-08-28 09:32:06', '2023-10-04 07:47:43'),
+(2, 'uploads/selfies/1695817958_truck1.jpg', 48, 50, 1, 0, 0, 0, 0, 0, '2023-08-28 09:32:06', '2023-10-04 07:47:43'),
+(3, 'uploads/selfies/1695817958_truck1.jpg', 66, 50, 1, 0, 0, 0, 0, 0, '2023-08-28 09:32:06', '2023-10-04 07:47:43'),
+(4, 'uploads/selfies/1695817958_truck1.jpg', 68, 50, 1, 0, 0, 0, 0, 0, '2023-08-28 09:32:06', '2023-10-04 07:47:43'),
+(5, 'uploads/selfies/1695817958_truck1.jpg', 92, 50, 1, 0, 0, 0, 0, 0, '2023-08-28 09:32:06', '2023-10-04 07:47:43'),
+(6, 'uploads/selfies/1695817958_truck1.jpg', 93, 50, 1, 0, 0, 0, 0, 0, '2023-08-28 09:32:06', '2023-10-04 07:47:43'),
+(7, 'uploads/selfies/1695817958_truck1.jpg', 94, 50, 1, 0, 0, 0, 0, 0, '2023-08-28 09:32:06', '2023-10-04 07:47:43'),
+(8, 'uploads/selfies/1695817958_truck1.jpg', 98, 50, 1, 0, 0, 0, 0, 0, '2023-08-28 09:32:06', '2023-10-04 07:47:43'),
+(9, 'uploads/selfies/1695817958_truck1.jpg', 102, 50, 1, 0, 0, 0, 0, 0, '2023-08-28 09:32:06', '2023-10-04 07:47:43'),
+(10, 'uploads/selfies/1695817958_truck1.jpg', 127, 50, 1, 0, 0, 0, 0, 0, '2023-08-28 09:32:06', '2023-10-04 07:47:43'),
+(11, 'uploads/selfies/1695817958_truck1.jpg', 128, 50, 1, 0, 0, 0, 0, 0, '2023-08-28 09:32:06', '2023-10-04 07:47:43'),
+(12, 'uploads/selfies/1695817958_truck1.jpg', 129, 50, 1, 0, 0, 0, 0, 0, '2023-08-28 09:32:06', '2023-10-04 07:47:43'),
+(13, 'uploads/selfies/1695817958_truck1.jpg', 161, 50, 0, 0, 0, 0, 0, 0, '2023-09-27 12:29:44', '2023-10-04 07:47:43'),
+(14, NULL, 161, 0, 0, 0, 0, 0, 0, 0, '2023-10-09 14:00:03', '2023-10-09 14:00:03'),
+(15, NULL, 166, 0, 0, 0, 0, 0, 0, 0, '2023-10-09 14:00:03', '2023-10-09 14:00:03'),
+(16, NULL, 161, 0, 0, 0, 0, 0, 0, 0, '2023-10-11 14:00:03', '2023-10-11 14:00:03'),
+(17, NULL, 166, 0, 0, 0, 0, 0, 0, 0, '2023-10-11 14:00:03', '2023-10-11 14:00:03'),
+(18, NULL, 161, 0, 0, 0, 0, 0, 0, 0, '2023-10-12 14:00:03', '2023-10-12 14:00:03'),
+(19, NULL, 166, 0, 0, 0, 0, 0, 0, 0, '2023-10-12 14:00:03', '2023-10-12 14:00:03'),
+(20, NULL, 161, 0, 0, 0, 0, 0, 0, 0, '2023-10-13 14:00:03', '2023-10-13 14:00:03'),
+(21, NULL, 166, 0, 0, 0, 0, 0, 0, 0, '2023-10-13 14:00:03', '2023-10-13 14:00:03'),
+(22, NULL, 161, 0, 0, 0, 0, 0, 0, 0, '2023-10-14 14:00:03', '2023-10-14 14:00:03'),
+(23, NULL, 166, 0, 0, 0, 0, 0, 0, 0, '2023-10-14 14:00:03', '2023-10-14 14:00:03'),
+(24, NULL, 161, 0, 0, 0, 0, 0, 0, 0, '2023-10-15 14:00:03', '2023-10-15 14:00:03'),
+(25, NULL, 166, 0, 0, 0, 0, 0, 0, 0, '2023-10-15 14:00:03', '2023-10-15 14:00:03');
 
 --
 -- Indexes for dumped tables
@@ -7079,6 +7383,18 @@ ALTER TABLE `admins`
 -- Indexes for table `biddings`
 --
 ALTER TABLE `biddings`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `bike_brands`
+--
+ALTER TABLE `bike_brands`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `bike_models`
+--
+ALTER TABLE `bike_models`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -7381,6 +7697,12 @@ ALTER TABLE `withdraw_logs`
   ADD UNIQUE KEY `withdraw_logs_trx_unique` (`trx`);
 
 --
+-- Indexes for table `worksheets`
+--
+ALTER TABLE `worksheets`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -7388,13 +7710,25 @@ ALTER TABLE `withdraw_logs`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `biddings`
 --
 ALTER TABLE `biddings`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `bike_brands`
+--
+ALTER TABLE `bike_brands`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT for table `bike_models`
+--
+ALTER TABLE `bike_models`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=189;
 
 --
 -- AUTO_INCREMENT for table `blog_categories`
@@ -7586,7 +7920,7 @@ ALTER TABLE `section_data`
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `subscribes`
@@ -7598,7 +7932,7 @@ ALTER TABLE `subscribes`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `trips`
@@ -7610,7 +7944,7 @@ ALTER TABLE `trips`
 -- AUTO_INCREMENT for table `trip_infos`
 --
 ALTER TABLE `trip_infos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT for table `truck_types`
@@ -7634,13 +7968,13 @@ ALTER TABLE `upazilas`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=177;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=179;
 
 --
 -- AUTO_INCREMENT for table `user_details`
 --
 ALTER TABLE `user_details`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `vehicles`
@@ -7659,6 +7993,12 @@ ALTER TABLE `withdraw_gateways`
 --
 ALTER TABLE `withdraw_logs`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `worksheets`
+--
+ALTER TABLE `worksheets`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- Constraints for dumped tables
